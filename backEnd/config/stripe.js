@@ -1,12 +1,19 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-// Create payment intent
-const createPaymentIntent = async (amount, currency = 'EGY', metadata = {}) => {
+const stripe = require('stripe')(
+  process.env.STRIPE_MODE === 'sandbox' 
+    ? process.env.STRIPE_TEST_SECRET_KEY 
+    : process.env.STRIPE_SECRET_KEY
+);
+
+const createPaymentIntent = async (amount, currency = 'USD', metadata = {}) => {
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(amount * 100), // Convert to cents
+      amount: Math.round(amount * 100),
       currency,
-      metadata,
+      metadata: {
+        ...metadata,
+        mode: process.env.STRIPE_MODE || 'sandbox', 
+      },
       automatic_payment_methods: {
         enabled: true,
       },
@@ -18,8 +25,6 @@ const createPaymentIntent = async (amount, currency = 'EGY', metadata = {}) => {
     throw new Error('Failed to create payment intent');
   }
 };
-
-// Confirm payment intent
 const confirmPaymentIntent = async (paymentIntentId) => {
   try {
     const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);
@@ -29,8 +34,6 @@ const confirmPaymentIntent = async (paymentIntentId) => {
     throw new Error('Failed to confirm payment');
   }
 };
-
-// Retrieve payment intent
 const retrievePaymentIntent = async (paymentIntentId) => {
   try {
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
@@ -40,13 +43,11 @@ const retrievePaymentIntent = async (paymentIntentId) => {
     throw new Error('Failed to retrieve payment');
   }
 };
-
-// Create refund
 const createRefund = async (paymentIntentId, amount) => {
   try {
     const refund = await stripe.refunds.create({
       payment_intent: paymentIntentId,
-      amount: amount ? Math.round(amount * 100) : undefined, // Convert to cents if provided
+      amount: amount ? Math.round(amount * 100) : undefined,
     });
 
     return refund;
@@ -55,23 +56,6 @@ const createRefund = async (paymentIntentId, amount) => {
     throw new Error('Failed to create refund');
   }
 };
-
-// Get payment methods for a customer
-const getPaymentMethods = async (customerId) => {
-  try {
-    const paymentMethods = await stripe.paymentMethods.list({
-      customer: customerId,
-      type: 'card',
-    });
-
-    return paymentMethods;
-  } catch (error) {
-    console.error('Stripe payment methods retrieval error:', error);
-    throw new Error('Failed to retrieve payment methods');
-  }
-};
-
-// Create customer
 const createCustomer = async (email, name) => {
   try {
     const customer = await stripe.customers.create({
@@ -85,44 +69,36 @@ const createCustomer = async (email, name) => {
     throw new Error('Failed to create customer');
   }
 };
-
-// Webhook handler
 const handleWebhook = async (payload, sig) => {
   let event;
+  
+  const webhookSecret = process.env.STRIPE_MODE === 'sandbox'
+    ? process.env.STRIPE_TEST_WEBHOOK_SECRET
+    : process.env.STRIPE_WEBHOOK_SECRET;
 
   try {
     event = stripe.webhooks.constructEvent(
       payload,
       sig,
-      process.env.STRIPE_WEBHOOK_SECRET
+      webhookSecret
     );
   } catch (err) {
     console.error('Webhook signature verification failed:', err.message);
     throw new Error('Webhook signature verification failed');
   }
 
-  // Handle the event
+
   switch (event.type) {
     case 'payment_intent.succeeded':
-      const paymentIntent = event.data.object;
-      console.log('Payment succeeded:', paymentIntent.id);
-      // Here you would update your database
+      console.log('Sandbox/Live Payment succeeded:', event.data.object.id);
       break;
 
     case 'payment_intent.payment_failed':
-      const failedPayment = event.data.object;
-      console.log('Payment failed:', failedPayment.id);
-      // Here you would update your database with failure info
-      break;
-
-    case 'payment_intent.canceled':
-      const canceledPayment = event.data.object;
-      console.log('Payment canceled:', canceledPayment.id);
-      // Here you would update your database
+      console.log(' Payment failed:', event.data.object.id);
       break;
 
     default:
-      console.log(`Unhandled event type: ${event.type}`);
+      console.log(` Unhandled event type: ${event.type}`);
   }
 
   return event;
@@ -133,7 +109,6 @@ module.exports = {
   confirmPaymentIntent,
   retrievePaymentIntent,
   createRefund,
-  getPaymentMethods,
   createCustomer,
   handleWebhook
 };
