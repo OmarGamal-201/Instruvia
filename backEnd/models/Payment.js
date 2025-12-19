@@ -32,6 +32,11 @@ const paymentSchema = new mongoose.Schema({
     min: 0,
     max: 1
   },
+  mode: {
+  type: String,
+  enum: ['sandbox', 'live'],
+  default: 'sandbox'
+},
   currency: {
     type: String,
     default: 'USD',
