@@ -1,0 +1,111 @@
+<div class="courses-page">
+  <div class="header-controls">
+    <div class="language-selector">
+      <select (change)="onLanguageChange($event)" [value]="currentLanguage">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+      </select>
+    </div>
+    <button class="theme-toggle" (click)="toggleTheme()">
+      <span>{{ isDarkMode ? '☀️' : '🌙' }}</span>
+    </button>
+  </div>
+
+  <header class="page-header">
+    <h1>{{ text.pageTitle }}</h1>
+    <p class="page-subtitle">{{ text.subtitle }}</p>
+    <div class="search-container">
+      <div class="search-box">
+        <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" [placeholder]="text.searchPlaceholder" class="search-input">
+        <button (click)="onSearch()" class="search-btn">{{ text.searchButton }}</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="courses-container">
+    <aside class="sidebar">
+      <div class="filters-card">
+        <h3>{{ text.filtersTitle }}</h3>
+
+        <div class="filter-section">
+          <h4>{{ text.categoryLabel }}</h4>
+          <div class="category-filters">
+            <button *ngFor="let cat of categories"
+                    [class.active]="selectedCategory === cat.id"
+                    (click)="onCategoryChange(cat.id)"
+                    class="category-btn">
+              {{ cat.name }}
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h4>{{ text.levelLabel }}</h4>
+          <div class="category-filters">
+            <button *ngFor="let lvl of courseLevels"
+                    [class.active]="selectedLevel === lvl.id"
+                    (click)="onLevelChange(lvl.id)"
+                    class="category-btn">
+              {{ lvl.name }}
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h4>{{ text.priceLabel }}</h4>
+          <div class="checkbox-list">
+            <label *ngFor="let range of priceRanges" class="checkbox-item">
+              <input type="checkbox" [(ngModel)]="range.checked" (change)="onPriceChange()">
+              <span class="checkbox-label">{{ currentLanguage === 'ar' && range.id === 'free' ? 'مجاني' : range.label }}</span>
+            </label>
+          </div>
+        </div>
+
+        <button (click)="clearFilters()" class="clear-filters-btn">{{ text.clearFilters }}</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="sort-controls">
+        <div class="sort-by">
+          <span>{{ text.sortBy }}</span>
+          <select [(ngModel)]="sortBy" (change)="onSortChange(sortBy)" class="sort-select">
+            <option *ngFor="let opt of sortOptions" [value]="opt.id">{{ opt.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngIf="isLoading" class="loader-container">
+        <div class="spinner"></div>
+      </div>
+
+      <div *ngIf="!isLoading" class="courses-grid">
+        <div *ngIf="filteredCourses.length === 0" class="no-results">
+          <p>{{ text.noResults }}</p>
+        </div>
+
+        <div *ngFor="let course of filteredCourses" class="course-card">
+          <div class="course-image">
+            <img [src]="course.thumbnail || 'assets/default.png'" [alt]="course.title">
+            <div *ngIf="course.featured" class="featured-badge">⭐ Featured</div>
+          </div>
+          <div class="course-content">
+            <span class="course-category">{{ getCategoryName(course.category) }}</span>
+            <h3>{{ course.title }}</h3>
+            <p class="instructor">By {{ course.instructor?.name || 'Instructor' }}</p>
+
+            <div class="course-meta">
+              <span class="rating">⭐ {{ course.rating?.average || 0 }} ({{ course.rating?.count || 0 }})</span>
+              <span class="level-badge" [class]="course.level">{{ getLevelText(course.level) }}</span>
+            </div>
+
+            <div class="course-footer">
+              <span class="price">{{ formatPrice(course.price) }}</span>
+              <button class="enroll-btn">{{ text.enroll }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

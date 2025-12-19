@@ -1,0 +1,65 @@
+<div class="qa-container">
+
+  <div class="qa-header">
+    <h2>Questions & Answers</h2>
+  </div>
+
+  <div class="qa-card" *ngFor="let item of qaList">
+
+    <div class="qa-user">
+      <div class="avatar" [ngClass]="item.avatarColorClass">
+        {{ item.avatarLetter }}
+      </div>
+      <div>
+        <h4>{{ item.user }}</h4>
+        <p class="question">{{ item.question }}</p>
+      </div>
+    </div>
+
+    <div class="qa-answer">
+      {{ item.answer }}
+    </div>
+
+    <div class="qa-footer">
+      <span class="action like-btn"
+            (click)="toggleLike(item)"
+            [class.active-like]="item.isLiked">
+        <i [class]="item.isLiked ? 'fa-solid fa-thumbs-up' : 'fa-regular fa-thumbs-up'"></i>
+        {{ item.likes }}
+      </span>
+    </div>
+
+  </div>
+</div>
+
+<button class="chat-btn" (click)="toggleChat()">
+  💬 Ask Question
+</button>
+
+<div class="chat-box" [class.open]="isChatOpen">
+
+  <div class="chat-header">
+    <span>Instructor Support</span>
+    <button (click)="toggleChat()" style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;">×</button>
+  </div>
+
+  <div class="chat-body">
+    <div *ngIf="messages.length === 0" style="text-align: center; color: #888; padding: 20px;">
+      Start the conversation...
+    </div>
+
+    <div *ngFor="let msg of messages"
+         [ngClass]="{'my-msg': msg.sender === 'student', 'other-msg': msg.sender === 'instructor'}">
+      <div class="bubble">{{ msg.text }}</div>
+      <small style="display:block; font-size:0.7rem; opacity:0.7; margin-top:2px;">
+        {{ msg.time | date:'shortTime' }}
+      </small>
+    </div>
+  </div>
+
+  <div class="chat-footer">
+    <input [(ngModel)]="txtMessage" (keyup.enter)="send()" placeholder="Type query...">
+    <button (click)="send()">➤</button>
+  </div>
+
+</div>

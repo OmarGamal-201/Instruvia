@@ -1,0 +1,248 @@
+<header class="header" [ngClass]="{'dark-mode': isDarkMode}">
+    <!-- LEFT: Logo -->
+    <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>Instruvia</span>
+    </div>
+
+    <!-- CENTER (Desktop only) -->
+    <ul class="center-links">
+        <li><a href="/home">Home</a></li>
+        <li><a href="/courses">Courses</a></li>
+        <li><a href="/consultions">Consultations</a></li>
+        <li class="active"><a href="/about">About</a></li>
+    </ul>
+
+    <!-- RIGHT (Desktop only) -->
+    <div class="right-section">
+        <i class="fa-regular fa-moon" (click)="toggleDarkMode()"></i>
+        <a href="#" class="login">Login</a>
+        <button class="get-started">Get Started</button>
+    </div>
+
+    <!-- HAMBURGER -->
+    <div class="menu-icon" (click)="toggleMenu()">
+        <i class="fa-solid fa-bars" [class.active]="!isOpen"></i>
+        <i class="fa-solid fa-xmark" [class.active]="isOpen"></i>
+    </div>
+</header>
+
+<!-- MOBILE MENU -->
+<nav class="mobile-menu" [class.active]="isOpen" [ngClass]="{'dark-mode': isDarkMode}">
+    <a href="#">Home</a>
+    <a href="#">Courses</a>
+    <a href="#">Consultations</a>
+    <a href="#">About</a>
+    <i class="fa-regular fa-moon" (click)="toggleDarkMode()"></i>
+    <a href="#" class="login">Login</a>
+    <button class="get-started">Get Started</button>
+</nav>
+
+<div class="about-container" [ngClass]="{'dark-mode': isDarkMode}">
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="hero-content">
+            <h1>About Instruvia</h1>
+            <p>Empowering learners worldwide with quality education and expert consultation since 2020.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <h3>50,000+</h3>
+                    <p>Active Learners</p>
+                </div>
+                <div class="stat">
+                    <h3>1,000+</h3>
+                    <p>Expert Instructors</p>
+                </div>
+                <div class="stat">
+                    <h3>10,000+</h3>
+                    <p>Consultations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="content-wrapper">
+            <div class="mission-content">
+                <h2>Our Mission</h2>
+                <p>We believe education should be accessible, engaging, and transformative. Our mission is to bridge the gap between ambition and achievement by providing world-class learning experiences and personalized guidance.</p>
+                <div class="mission-values">
+                    <div class="value">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Innovation</h3>
+                        <p>Cutting-edge teaching methods and technology-enhanced learning</p>
+                    </div>
+                    <div class="value">
+                        <i class="fas fa-heart"></i>
+                        <h3>Passion</h3>
+                        <p>Dedicated educators who love teaching and inspiring others</p>
+                    </div>
+                    <div class="value">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Excellence</h3>
+                        <p>High-quality content and exceptional learning outcomes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="content-wrapper">
+            <div class="story-content">
+                <h2>Our Story</h2>
+                <p>Founded in 2020 by a team of passionate educators and technologists, Instruvia emerged from a simple observation: traditional education wasn't keeping pace with the rapidly changing world.</p>
+                <p>What started as a small platform offering a handful of courses has grown into a comprehensive learning ecosystem serving thousands of students across the globe. We've helped professionals upskill, students pursue their passions, and businesses train their teams.</p>
+                <div class="story-timeline">
+                    <div class="timeline-item">
+                        <div class="year">2020</div>
+                        <div class="description">Founded with 10 courses and 100 students</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">2021</div>
+                        <div class="description">Expanded to 500+ courses and launched consultation services</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">2022</div>
+                        <div class="description">Reached 10,000+ learners and introduced mobile app</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">2023</div>
+                        <div class="description">Global expansion with 50,000+ learners worldwide</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="content-wrapper">
+            <h2>Meet Our Leadership Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Sarah Johnson</h3>
+                    <p class="role">CEO & Founder</p>
+                    <p class="bio">Former educator with 15+ years in EdTech, passionate about making quality education accessible to all.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Michael Chen</h3>
+                    <p class="role">CTO</p>
+                    <p class="bio">Tech visionary leading our platform development and ensuring cutting-edge learning experiences.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Emily Davis</h3>
+                    <p class="role">Head of Content</p>
+                    <p class="bio">Curriculum expert ensuring our courses meet the highest educational standards.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>David Kumar</h3>
+                    <p class="role">Head of Operations</p>
+                    <p class="bio">Operations expert ensuring smooth learning experiences for all our users.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="content-wrapper">
+            <h2>Our Core Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Education First</h3>
+                    <p>Every decision we make puts the learner's educational journey at the center.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Community</h3>
+                    <p>We foster a supportive learning environment where everyone can thrive together.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Innovation</h3>
+                    <p>We constantly evolve our teaching methods and platform technology.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Integrity</h3>
+                    <p>We operate with transparency and maintain the highest ethical standards.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Global Impact</h3>
+                    <p>We're committed to making quality education accessible worldwide.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Growth</h3>
+                    <p>We support continuous learning and personal development for all.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="content-wrapper">
+            <h2>Ready to Start Your Learning Journey?</h2>
+            <p>Join thousands of learners who are already transforming their careers with Instruvia.</p>
+            <div class="cta-buttons">
+                <button class="btn-primary">Explore Courses</button>
+                <button class="btn-secondary">Book Consultation</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer class="footer" [ngClass]="{'dark-mode': isDarkMode}">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h2 class="logo"><i class="fas fa-graduation-cap"></i> Instruvia</h2>
+            <p>Empowering learners worldwide with quality education and expert consultation.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <h4>Platform</h4>
+            <a href="#">Courses</a>
+            <a href="#">Consultations</a>
+            <a href="#">Instructors</a>
+            <a href="#">Pricing</a>
+        </div>
+        <div class="footer-links">
+            <h4>Company</h4>
+            <a href="#">About Us</a>
+            <a href="#">Careers</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-links">
+            <h4>Support</h4>
+            <a href="#">Help Center</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">FAQ</a>
+        </div>
+    </div>
+    <p class="copyright">© 2025 Instruvia. All rights reserved. Built with passion for education.</p>
+</footer>

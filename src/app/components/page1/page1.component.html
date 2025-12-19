@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+
+
+<div class="container">
+
+   <button class="back-btn">
+    <span>&larr;</span> Back
+  </button>
+
+  <!-- Title -->
+  <div class="header">
+    <h1>Book Your Consultation</h1>
+    <p class="steps">Step 1 of 5</p>
+  </div>
+
+  <div class="content">
+
+    <!-- LEFT SIDE -->
+    <div class="left">
+
+  <div class="left-box">
+
+    <!-- Steps -->
+    <div class="steps-wrapper">
+      <div class="step">
+        <div class="circle active">1</div>
+        <span>Type</span>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="step">
+        <div class="circle">2</div>
+        <span>Date</span>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="step">
+        <div class="circle">3</div>
+        <span>Time</span>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="step">
+        <div class="circle">4</div>
+        <span>Info</span>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="step">
+        <div class="circle">5</div>
+        <span>Payment</span>
+      </div>
+    </div>
+
+    <h2>Select Consultation Type</h2>
+
+    <!-- Cards -->
+    <div
+      class="card"
+      *ngFor="let opt of options"
+      [class.active]="selected?.id === opt.id"
+      (click)="selectCard(opt)"
+    >
+      <div class="row">
+        <div>
+          <h3>{{ opt.title }}</h3>
+          <p>{{ opt.desc }}</p>
+          <span class="price">${{ opt.price }}</span>
+        </div>
+
+        <div class="duration">
+          ⏱ {{ opt.duration }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Continue button -->
+    <button class="continue" [disabled]="!selected" (click)="goNext(1)" >
+      Continue to Date Selection
+    </button>
+
+
+  </div>
+
+</div>
+
+
+  <app-summary></app-summary>
+
+  </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="footer">
+    <div class="footer-container">
+
+        <!-- Left Section -->
+        <div class="footer-brand">
+            <h2 class="logo"><img src="../../../assets/logo.png" alt=""> Instruvia</h2>
+            <p>Empowering learners worldwide with quality education and expert consultation.</p>
+
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <!-- Platform -->
+        <div class="footer-col">
+            <h3>Platform</h3>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">How It Works</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+        </div>
+
+        <!-- Resources -->
+        <div class="footer-col">
+            <h3>Resources</h3>
+            <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">FAQs</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="footer-col">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Cookie Policy</a></li>
+                <li><a href="#">Refund Policy</a></li>
+            </ul>
+        </div>
+
+        <!-- Learn -->
+        <div class="footer-col">
+            <h3>Learn</h3>
+            <ul>
+                <li><a href="#">Browse Courses</a></li>
+                <li><a href="#">Find Instructors</a></li>
+                <li><a href="#">Book Consultation</a></li>
+                <li><a href="#">Become Instructor</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <div class="bottom-item">
+            <i class="fa-solid fa-envelope"></i> support@instruvia.com
+        </div>
+
+        <div class="bottom-item">
+            <i class="fa-solid fa-phone"></i> +1 (555) 123-4567
+        </div>
+
+        <div class="bottom-item">
+            <i class="fa-solid fa-location-dot"></i> San Francisco, CA
+        </div>
+    </div>
+
+    <p class="copyright">
+        © 2025 Instruvia. All rights reserved. Built with passion for education.
+    </p>
+</footer>
+
+
+
+</body>
+</html>

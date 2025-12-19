@@ -1,0 +1,27 @@
+<div class="summary-box" *ngIf="booking.bookingData$ | async as data">
+  <h3>Booking Summary</h3>
+  <div class="doctor">
+    <img src="../../../assets/illustration-instructor_931878-256061.jpg" alt="Doctor Image" />
+    <div>
+      <p class="name">Dr. Sarah Johnson</p>
+      <p class="spec">Web Development</p>
+      <p class="rating">⭐ 4.9 (156 sessions)</p>
+    </div>
+  </div>
+  <hr>
+  <div class="summary-item"><span>Type</span><span>{{ data.consultation?.title || '-' }}</span></div>
+  <div class="summary-item"><span>Date</span><span>{{ data.date || '-' }}</span></div>
+  <div class="summary-item"><span>Time</span><span>{{ data.time || '-' }}</span></div>
+  <div class="summary-item"><span>Duration</span><span>{{ data.consultation?.duration || '-' }}</span></div>
+
+  <ng-container *ngIf="data.fullName">
+    <hr>
+    <div class="summary-item"><span>Client</span><span class="highlight">{{ data.fullName }}</span></div>
+  </ng-container>
+
+  <hr>
+  <div class="summary-item"><span>Fee</span><span>${{ data.consultationFee }}</span></div>
+  <div class="summary-item"><span>Platform Fee</span><span>${{ data.platformFee }}</span></div>
+  <hr>
+  <div class="summary-total"><span>Total</span><span>${{ data.total }}</span></div>
+</div>

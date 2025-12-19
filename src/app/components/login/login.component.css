@@ -1,0 +1,465 @@
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s ease;
+}
+/* Header Controls */
+.header-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 0 20px;
+}
+
+.language-selector select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.language-selector select:focus {
+  outline: none;
+  border-color: #3f51b5;
+  box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+}
+
+.theme-toggle {
+  width: 50px;
+  height: 30px;
+  border-radius: 15px;
+  border: none;
+  background: linear-gradient(90deg, #f0f0f0 50%, #333 50%);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+  overflow: hidden;
+}
+
+.theme-toggle .light-icon,
+.theme-toggle .dark-icon {
+  font-size: 16px;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.theme-toggle .dark-icon {
+  color: #ffffff;
+}
+
+
+
+/* ===== الكارت ===== */
+.login-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.5s ease-out;
+  transition: all 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== الرأس ===== */
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-header h1 {
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease;
+}
+
+.login-header h2 {
+  font-size: 26px;
+  color: #444;
+  margin-bottom: 8px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.subtitle {
+  color: #777;
+  font-size: 15px;
+  margin-top: 5px;
+  transition: color 0.3s ease;
+}
+
+/* ===== النموذج ===== */
+.login-form {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.form-group input {
+  width: 90%;
+  padding: 14px 16px;
+  border: 2px solid #e0e0e0;
+  align-items: center;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group input.is-invalid {
+  border-color: #ff6b6b;
+  background-color: #fff5f5;
+}
+
+.form-group input.is-valid {
+  border-color: #51cf66;
+  background-color: #f8fff9;
+}
+
+.form-group input::placeholder {
+  color: #999;
+  transition: color 0.3s ease;
+}
+
+/* Password Wrapper */
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #667eea;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.3s ease;
+}
+
+.toggle-password-btn:hover {
+  background-color: rgba(102, 126, 234, 0.1);
+}
+
+/* Validation Messages */
+.validation-messages {
+  margin-top: 8px;
+  min-height: 20px;
+}
+
+.error-text {
+  color: #ff6b6b;
+  font-size: 12px;
+  display: block;
+  animation: slideIn 0.3s ease;
+  transition: color 0.3s ease;
+}
+
+.success-text {
+  color: #51cf66;
+  font-size: 12px;
+  display: block;
+  animation: slideIn 0.3s ease;
+  transition: color 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== خيارات النموذج ===== */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.remember-me input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #667eea;
+  cursor: pointer;
+}
+
+.remember-me label {
+  color: #555;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.forgot-password {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.forgot-password:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+.signin-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 20px;
+}
+
+.signin-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.signin-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.signin-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
+}
+
+/* ===== الفاصل ===== */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 25px 0;
+  color: #888;
+  font-size: 14px;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e0e0e0;
+  transition: border-color 0.3s ease;
+}
+
+.divider span {
+  padding: 0 15px;
+  transition: all 0.3s ease;
+}
+
+/* ===== أزرار Social ===== */
+.social-login {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.social-btn {
+  flex: 1;
+  padding: 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background: white;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.social-btn.google {
+  color: #333;
+}
+
+.social-btn.google:hover {
+  border-color: #333;
+  color: white;
+  background-color: #333;
+}
+
+.social-btn.github {
+  color: #333;
+}
+
+.social-btn.github:hover {
+  border-color: #333;
+  color: white;
+  background-color: #333;
+}
+
+/* ===== رابط Sign Up ===== */
+.signup-link {
+  text-align: center;
+  color: #666;
+  font-size: 15px;
+  margin-bottom: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  transition: all 0.3s ease;
+}
+
+.signup-link a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+  transition: color 0.3s;
+}
+
+.signup-link a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+.back-home {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.back-home a {
+  color: #888;
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.3s;
+}
+
+.back-home a:hover {
+  color: #667eea;
+}
+
+.back-home a::before {
+  content: "←";
+  font-size: 16px;
+}
+
+/* ===== تصميم متجاوب ===== */
+@media (max-width: 768px) {
+  .header-controls {
+    position: relative;
+    top: 0;
+    right: 0;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .language-selector select {
+    min-width: 100px;
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .theme-toggle {
+    width: 45px;
+    height: 26px;
+  }
+
+  .theme-text {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 25px;
+    margin: 10px;
+  }
+
+  .login-header h1 {
+    font-size: 28px;
+  }
+
+  .login-header h2 {
+    font-size: 22px;
+  }
+
+  .social-login {
+    flex-direction: column;
+  }
+
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .toggle-password-btn {
+    position: absolute;
+    right: 8px;
+    font-size: 12px;
+    padding: 3px 6px;
+  }
+}

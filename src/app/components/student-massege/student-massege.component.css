@@ -1,0 +1,65 @@
+.instructor-chat-panel {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.msg-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  padding: 10px;
+  margin-bottom: 15px;
+  background: #fafafa;
+}
+
+.dash-msg {
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.dash-msg.student {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+}
+
+/* أزرق للطالب */
+.dash-msg.instructor {
+  background: #e8f5e9;
+  border-left: 4px solid #4caf50;
+}
+
+/* أخضر للمدرب */
+.dash-msg p {
+  margin: 5px 0;
+}
+
+.time {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.reply-area {
+  display: flex;
+  gap: 10px;
+}
+
+.reply-area input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.reply-area button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+}

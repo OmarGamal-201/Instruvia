@@ -1,0 +1,405 @@
+<div class="profile-container" [class.rtl]="isRTL">
+  <div class="profile-card">
+
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+      <button class="lang-btn" [class.active]="currentLang === 'en'" (click)="switchLanguage('en')">
+        <span class="flag">EN</span>
+      </button>
+      <button class="lang-btn" [class.active]="currentLang === 'ar'" (click)="switchLanguage('ar')">
+        <span class="flag">AR</span>
+      </button>
+    </div>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="avatar-section">
+        <img [src]="user.avatar" alt="Profile" class="avatar">
+        <div class="avatar-overlay">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="profile-name">{{ user.name }}</h1>
+      <p class="profile-email">{{ user.email }}</p>
+
+      <div class="badge" *ngIf="user.isInstructor">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+        </svg>
+        {{ t.instructorBadge }}
+      </div>
+
+      <p class="member-since">{{ t.memberSince }} {{ user.joinDate }}</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons" *ngIf="!isEditing">
+      <button class="btn-secondary" (click)="toggleEdit()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+        </svg>
+        {{ t.edit }}
+      </button>
+
+      <button class="btn-secondary" (click)="openPasswordModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        {{ t.changePassword }}
+      </button>
+
+      <button class="btn-primary" (click)="openInstructorModal()" *ngIf="!user.isInstructor">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+        </svg>
+        {{ t.beInstructor }}
+      </button>
+    </div>
+
+    <!-- Profile Information Form -->
+    <form [formGroup]="profileForm" class="profile-content" enctype="multipart/form-data">
+      <h2 class="section-title">{{ t.personalInfo }}</h2>
+
+      <div class="info-grid">
+        <!-- Name Field -->
+        <div class="info-item">
+          <label>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            {{ t.name }}
+            <span class="required-star" *ngIf="isEditing">*</span>
+          </label>
+          <input *ngIf="isEditing" formControlName="name" type="text" class="input-field"
+            [class.invalid]="nameControl?.invalid && nameControl?.touched">
+          <div *ngIf="isEditing && nameControl?.invalid && nameControl?.touched" class="error-message">
+            {{ getNameError() }}
+          </div>
+          <p *ngIf="!isEditing" class="info-value">{{ user.name }}</p>
+        </div>
+
+        <!-- Email Field -->
+        <div class="info-item">
+          <label>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            {{ t.email }}
+          </label>
+          <p class="info-value">{{ user.email }}</p>
+        </div>
+
+        <!-- Phone Field -->
+        <div class="info-item">
+          <label>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+              </path>
+            </svg>
+            {{ t.phone }}
+            <span class="required-star" *ngIf="isEditing">*</span>
+          </label>
+          <input *ngIf="isEditing" formControlName="phone" type="tel" class="input-field"
+            [class.invalid]="phoneControl?.invalid && phoneControl?.touched">
+          <div *ngIf="isEditing && phoneControl?.invalid && phoneControl?.touched" class="error-message">
+            {{ getPhoneError() }}
+          </div>
+          <p *ngIf="!isEditing" class="info-value">{{ user.phone }}</p>
+        </div>
+
+        <!-- Bio Field -->
+        <div class="info-item full-width">
+          <label>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14,2 14,8 20,8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10,9 9,9 8,9"></polyline>
+            </svg>
+            {{ t.bio }}
+          </label>
+          <textarea *ngIf="isEditing" formControlName="bio" rows="3" class="input-field"></textarea>
+          <p *ngIf="!isEditing" class="info-value">{{ user.bio }}</p>
+        </div>
+        <div *ngIf="user.isInstructor">
+          <label>{{ isRTL ? 'التخصص' : 'Specialization' }}</label>
+          <input type="text" formControlName="specialization" placeholder="e.g. Web Development" />
+        </div>
+
+      </div>
+
+      <!-- Edit Actions -->
+      <div class="edit-actions" *ngIf="isEditing">
+        <button type="button" class="btn-cancel" (click)="toggleEdit()">{{ t.cancel }}</button>
+        <button type="button" class="btn-save" (click)="saveProfile()" [disabled]="profileForm.invalid">
+          {{ t.save }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Instructor Application Modal -->
+  <div class="modal-overlay" *ngIf="showInstructorModal" (click)="closeInstructorModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closeInstructorModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+        </svg>
+      </div>
+
+      <h2 class="modal-title">{{ t.becomeInstructorTitle }}</h2>
+      <p class="modal-description">{{ t.becomeInstructorDesc }}</p>
+
+      <div class="benefits-list">
+        <div class="benefit-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>{{ t.reason1 }}</span>
+        </div>
+        <div class="benefit-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>{{ t.reason2 }}</span>
+        </div>
+        <div class="benefit-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>{{ t.reason3 }}</span>
+        </div>
+        <div class="benefit-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>{{ t.reason4 }}</span>
+        </div>
+      </div>
+
+      <!-- Application Form -->
+      <form [formGroup]="instructorForm" (ngSubmit)="submitInstructorApplication()" class="instructor-form">
+        <div class="form-group">
+          <label for="bio">{{ t.bioLabel || 'Tell us about yourself' }}</label>
+          <textarea id="bio" formControlName="bio" rows="4"
+            [placeholder]="t.bioPlaceholder || 'Share your teaching experience, expertise, and why you want to become an instructor...'"
+            [class.error]="instructorForm.get('bio')?.invalid && instructorForm.get('bio')?.touched"
+            class="input-field">
+        </textarea>
+          <div class="error-message" *ngIf="instructorForm.get('bio')?.invalid && instructorForm.get('bio')?.touched">
+            <span *ngIf="instructorForm.get('bio')?.errors?.['required']">{{ t.bioRequired || 'Bio is required'}}</span>
+            <span *ngIf="instructorForm.get('bio')?.errors?.['minlength']">{{ t.bioMinLength || 'Bio must be at least 50
+              characters' }}</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="specialization">{{ t.specializationLabel || 'Specialization' }}</label>
+          <input type="text" id="specialization" formControlName="specialization"
+            [placeholder]="t.specializationPlaceholder || 'e.g., Web Development, Data Science, Design...'"
+            [class.error]="instructorForm.get('specialization')?.invalid && instructorForm.get('specialization')?.touched"
+            class="input-field">
+          <div class="error-message"
+            *ngIf="instructorForm.get('specialization')?.invalid && instructorForm.get('specialization')?.touched">
+            <span *ngIf="instructorForm.get('specialization')?.errors?.['required']">{{
+              t.specializationRequired||'Specialization is required' }}</span>
+          </div>
+        </div>
+
+        <div class="form-group file-upload-group">
+          <label for="documents">
+            {{ t.documentsLabel || 'Supporting Documents (Optional)' }} </label>
+
+            <div class="file-upload-wrapper  file-upload-ui">
+              <small class="form-hint"> JPG, PNG, PDF — multiple files allowed</small>
+            <input type="file" multiple accept=".jpg ,.png ,.pdf" class="file-input"
+              (change)="onFilesSelected($event)" />
+            <ul class="file-list" *ngIf="selectedFiles">
+              <li *ngFor="let file of selectedFiles; let i = index">
+                {{ file.name }}
+                <button type="button" (click)="removeFile(i)" class="remove-button">✕</button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="alert alert-error" *ngIf="applicationError">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span>{{ applicationError }}</span>
+          </div>
+
+          <div class="alert alert-success" *ngIf="applicationSuccess">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>{{ applicationSuccess }}</span>
+          </div>
+
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-modal-cancel" (click)="closeInstructorModal()" [disabled]="isSubmitting">
+            {{ t.close }} </button>
+          <button type="submit" class="btn-modal-apply" [disabled]="instructorForm.invalid || isSubmitting">
+            <span *ngIf="!isSubmitting">{{ t.apply }}</span>
+            <span *ngIf="isSubmitting">{{ t.submitting || 'Submitting...' }}</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal-overlay" *ngIf="showPasswordModal" (click)="closePasswordModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closePasswordModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+
+      <h2 class="modal-title">{{ t.changePasswordTitle }}</h2>
+
+      <form [formGroup]="passwordForm" class="password-form">
+        <!-- Current Password -->
+        <div class="form-group">
+          <label>
+            {{ t.currentPassword }}
+            <span class="required-star">*</span>
+          </label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input formControlName="currentPassword" [type]="showCurrentPassword ? 'text' : 'password'"
+              class="input-field" [class.invalid]="currentPasswordControl?.invalid && currentPasswordControl?.touched">
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility('current')">
+              <svg *ngIf="!showCurrentPassword" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg *ngIf="showCurrentPassword" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                </path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="currentPasswordControl?.invalid && currentPasswordControl?.touched" class="error-message">
+            {{ getPasswordError(currentPasswordControl) }}
+          </div>
+        </div>
+
+        <!-- New Password -->
+        <div class="form-group">
+          <label>
+            {{ t.newPassword }}
+            <span class="required-star">*</span>
+          </label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input formControlName="newPassword" [type]="showNewPassword ? 'text' : 'password'" class="input-field"
+              [class.invalid]="newPasswordControl?.invalid && newPasswordControl?.touched">
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility('new')">
+              <svg *ngIf="!showNewPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg *ngIf="showNewPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                </path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="newPasswordControl?.invalid && newPasswordControl?.touched" class="error-message">
+            {{ getPasswordError(newPasswordControl) }}
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label>
+            {{ t.confirmPassword }}
+            <span class="required-star">*</span>
+          </label>
+          <div class="input-wrapper">
+            <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input formControlName="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'"
+              class="input-field"
+              [class.invalid]="(confirmPasswordControl?.invalid || passwordForm.hasError('passwordMismatch')) && confirmPasswordControl?.touched">
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility('confirm')">
+              <svg *ngIf="!showConfirmPassword" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg *ngIf="showConfirmPassword" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                </path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          <div
+            *ngIf="(confirmPasswordControl?.invalid || passwordForm.hasError('passwordMismatch')) && confirmPasswordControl?.touched"
+            class="error-message">
+            {{ getConfirmPasswordError() }}
+          </div>
+        </div>
+      </form>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-modal-cancel" (click)="closePasswordModal()">{{ t.cancel }}</button>
+        <button type="button" class="btn-modal-apply" (click)="changePassword()" [disabled]="passwordForm.invalid">
+          {{ t.updatePassword }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

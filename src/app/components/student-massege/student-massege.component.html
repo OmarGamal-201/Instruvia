@@ -1,0 +1,21 @@
+<div class="instructor-chat-panel">
+  <h3>💬 Student Quesions</h3>
+
+  <div class="msg-list">
+    <div *ngIf="messages.length === 0" style="text-align:center; color:#999;">No questions yet.</div>
+
+    <div *ngFor="let msg of messages" class="dash-msg"
+         [class.student]="msg.sender === 'student'"
+         [class.instructor]="msg.sender === 'instructor'">
+
+      <strong>{{ msg.sender === 'student' ? 'Student 👨‍🎓' : 'You 👨‍🏫' }}:</strong>
+      <p>{{ msg.text }}</p>
+      <span class="time">{{ msg.time | date:'short' }}</span>
+    </div>
+  </div>
+
+  <div class="reply-area">
+    <input [(ngModel)]="replyText" (keyup.enter)="sendReply()" placeholder="Type a reply to student...">
+    <button (click)="sendReply()">Reply</button>
+  </div>
+</div>

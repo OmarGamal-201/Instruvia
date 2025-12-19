@@ -1,0 +1,185 @@
+.container {
+  padding: 40px;
+  background: white;
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 100px;
+}
+
+.subtitle {
+  margin-top: 6px;
+  color: #666;
+}
+
+.stats-row {
+  display: flex;
+  gap: 25px;
+  margin: 35px 0;
+}
+
+.content {
+  display: flex;
+  gap: 40px;
+}
+
+.content2 {
+  margin-top: 40px;
+  margin-left: -20px;
+}
+
+.container {
+  padding: 40px;
+  background: white;
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin-top: 6px;
+  color: #666;
+}
+
+.stats-row {
+  display: flex;
+  gap: 25px;
+  margin: 35px 0;
+  flex-wrap: wrap;
+  /* يسمح للكروت بالانتقال لسطر جديد على الشاشات الصغيرة */
+}
+
+.content {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  /* يسمح للكروت بالانتقال لسطر جديد */
+}
+
+.content2 {
+  margin-top: 40px;
+  margin-left: -20px;
+  flex-wrap: wrap;
+}
+
+/* تنسيق الدائرة اللي شايلة الأيقونة */
+.icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  /* جعلها مربعة بحواف دائرية */
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+/* لون كارت الأرباح (أخضر هادئ) */
+.icon-earnings {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* لون كارت الطلاب (أزرق هادئ) */
+.icon-students {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+/* لون كارت الكورسات (بنفسجي ليناسب الـ Theme) */
+.icon-courses {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+/* لون كارت التقييم (أصفر/برتقالي) */
+.icon-rating {
+  background-color: #fff8e1;
+  color: #f9a825;
+}
+
+/* ===========================
+   Tablet (992px)
+   =========================== */
+@media (max-width: 992px) {
+  .stats-row {
+    gap: 20px;
+  }
+
+  .content {
+    gap: 20px;
+    flex-direction: column;
+    /* الكورسات و quick actions يبقوا فوق بعض */
+  }
+
+  .content2 {
+    margin-left: 0;
+  }
+}
+
+/* ===========================
+   Mobile (700px)
+   =========================== */
+@media (max-width: 700px) {
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .stats-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .content2 {
+    margin-left: 0;
+    margin-top: 30px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+}
+
+/* ===========================
+   Extra Small Phones (450px)
+   =========================== */
+@media (max-width: 450px) {
+  .title {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .stats-row {
+    gap: 15px;
+  }
+
+  .content,
+  .content2 {
+    gap: 15px;
+  }
+}

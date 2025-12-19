@@ -1,0 +1,70 @@
+<div class="container">
+
+  <!-- LEFT SECTION -->
+  <div class="left">
+
+    <!-- WHAT YOU'LL LEARN -->
+    <div class="card learn-card">
+      <h2>What You'll Learn</h2>
+
+      <div class="learn-grid">
+        <div class="item" *ngFor="let l of learnList">
+          <span class="icon">✔</span>
+          <span>{{ l }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class="card desc-card">
+      <h2>Description</h2>
+
+      <p>
+        Welcome to the most comprehensive web development course on Instruvia!
+        This bootcamp will take you from complete beginner to confident web developer.
+      </p>
+
+      <p>
+        You'll learn by doing, building real-world projects that you can add to your portfolio.
+        By the end of this course, you'll have the skills to land your first job as a web developer
+        or freelance confidently.
+      </p>
+
+      <p>
+        The course is constantly updated with new content and follows the latest industry best practices.
+        Join over 12,000 students who have transformed their careers through this bootcamp.
+      </p>
+    </div>
+    <app-enroll3></app-enroll3>
+    <app-enroll4></app-enroll4>
+  </div>
+
+
+  <!-- RIGHT SECTION -->
+  <div class="right">
+    <div class="card instructor-card">
+
+      <h2>About the Instructor</h2>
+
+      <div class="profile">
+        <img src="../../../assets/illustration-instructor_931878-256061.jpg">
+        <div>
+          <h3>{{ instructor.name }}</h3>
+          <p class="title">{{ instructor.title }}</p>
+        </div>
+      </div>
+
+      <ul class="info">
+        <li>⭐ {{ instructor.rating }} Instructor Rating</li>
+        <li>👥 {{ instructor.students | number }}+ Students</li>
+        <li>📘 {{ instructor.courses }} Courses</li>
+      </ul>
+
+      <p class="bio">{{ instructor.bio }}</p>
+
+
+    </div>
+  </div>
+
+</div>
+

@@ -1,0 +1,67 @@
+<div class="course-container">
+  <div class="main-content">
+    <div class="video-wrapper">
+      <video
+        #videoPlayer
+        [src]="currentLesson?.url"
+        controls
+        autoplay
+        (ended)="onVideoEnded()"
+        class="responsive-video">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="lesson-info" *ngIf="currentLesson">
+      <h1>{{ currentLesson.title }}</h1>
+      <div class="actions">
+        <span class="duration">⏱ {{ currentLesson.duration }}</span>
+
+        <button class="btn-complete" (click)="onVideoEnded()" [disabled]="currentLesson.completed">
+          {{ currentLesson.completed ? '✅ Completed' : 'Mark as Complete' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <h3 class="sidebar-title">Course Content</h3>
+
+    <div class="accordion">
+      <div class="section-item" *ngFor="let section of sections; let secIndex = index">
+
+        <div class="section-header" (click)="toggleSection(secIndex)" [class.active-header]="section.isOpen">
+          <div class="sec-title">
+            <strong>{{ section.title }}</strong>
+            <span class="lesson-count">{{ section.lessonsCount }} Lessons</span>
+          </div>
+          <span class="toggle-icon">{{ section.isOpen ? '−' : '+' }}</span>
+        </div>
+
+        <div class="lessons-list" *ngIf="section.isOpen">
+          <div
+            class="lesson-item"
+            *ngFor="let lesson of section.lessons; let lessonIndex = index"
+            [class.active]="lesson === currentLesson"
+            [class.locked]="lesson.locked"
+            [class.completed]="lesson.completed"
+            (click)="playLesson(lesson, secIndex, lessonIndex)">
+
+            <div class="status-icon">
+              <span *ngIf="lesson.locked">🔒</span> <span *ngIf="!lesson.locked && !lesson.completed && lesson !== currentLesson">▶️</span> <span *ngIf="lesson === currentLesson && !lesson.completed">🎬</span> <span *ngIf="lesson.completed" class="check">✅</span> </div>
+
+            <div class="lesson-details">
+              <span class="lesson-title">{{ lesson.title }}</span>
+              <span class="lesson-meta">
+                {{ lesson.duration }}
+                <span *ngIf="lesson.preview && lesson.locked === false" class="badge-preview">Preview</span>
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+
+<div class="container">
+
+  <!-- LEFT SECTION -->
+  <div class="left">
+
+    <span class="badge">{{ course.category }}</span>
+
+    <h1 class="title">{{ course.title }}</h1>
+    <p class="subtitle">{{ course.subtitle }}</p>
+
+    <div class="stats">
+      <div class="item">
+        ⭐ {{ course.rating }}
+        <span class="small">({{ course.ratingsCount }} ratings)</span>
+      </div>
+
+      <div class="item">
+        👥 {{ course.students }} students
+      </div>
+
+      <div class="item">
+        ⏱️ {{ course.hours }} hours
+      </div>
+
+      <div class="item">
+        📘 {{ course.lessons }} lessons
+      </div>
+    </div>
+
+    <div class="instructor">
+      <img src="../../../assets/illustration-instructor_931878-256061.jpg" alt="Instructor" />
+      <span>Created by <b>{{ course.instructor }}</b></span>
+    </div>
+
+  </div>
+
+  <!-- RIGHT SECTION -->
+  <div class="right">
+    <div class="card">
+
+      <div class="video-box">
+        <img src="../../../assets//programming-1873854_1280.webp" />
+        <div class="play-btn">▶</div>
+      </div>
+
+      <h2 class="price">${{ course.price }}</h2>
+
+      <button class="enroll">Enroll Now</button>
+
+
+      <div class="includes-title">This course includes:</div>
+
+      <ul class="course-includes">
+        <li>⏱️ 42 hours on-demand video</li>
+        <li>⬇️ 85 downloadable resources</li>
+        <li>📄 Certificate of completion</li>
+        <li>♾️ Lifetime access</li>
+      </ul>
+
+      <button class="book">
+        🔴 Book Consultation with Instructor
+      </button>
+    </div>
+  </div>
+
+
+
+</div>

@@ -1,0 +1,61 @@
+<div class="login-container">
+  <div class="header-controls">
+    <div class="language-selector">
+      <select (change)="onLanguageChange($event)" [value]="currentLanguage">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+      </select>
+    </div>
+    <button class="theme-toggle" (click)="toggleTheme()">
+      <span>{{ isDarkMode ? '☀️' : '🌙' }}</span>
+    </button>
+  </div>
+
+  <div class="login-card">
+    <div class="login-header">
+      <h1><img src="assets/logo.jpg" width="35" height="35"> Instruvia</h1>
+      <h2>{{ text.welcome }}</h2>
+      <p class="subtitle">{{ text.signin }}</p>
+    </div>
+
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>{{ text.email }}</label>
+        <input type="email" formControlName="email" [placeholder]="text.emailPlaceholder"
+          [class.is-invalid]="submitted && email?.invalid">
+        <div *ngIf="submitted && email?.errors" class="validation-messages">
+          <small class="error-text">⚠️ {{ text.emailInvalid }}</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>{{ text.password }}</label>
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" [placeholder]="text.passwordPlaceholder"
+          [class.is-invalid]="submitted && password?.invalid">
+      </div>
+
+      <div class="form-options">
+        <div class="remember-me">
+          <input type="checkbox" id="remember" formControlName="rememberMe">
+          <label for="remember">{{ text.remember }}</label>
+        </div>
+        <a href="#" class="forgot-password">{{ text.forgot }}</a>
+      </div>
+
+      <button type="submit" class="signin-btn" [disabled]="loginForm.invalid || isLoading">
+        {{ isLoading ? text.loading : text.signinBtn }}
+      </button>
+
+      <div class="divider"><span>{{ text.or }}</span></div>
+
+      <div class="social-login">
+        <button type="button" class="social-btn google">{{ text.google }}</button>
+        <button type="button" class="social-btn github">{{ text.github }}</button>
+      </div>
+
+      <div class="signup-link">
+        {{ text.noAccount }} <a routerLink="/register">{{ text.signup }}</a>
+      </div>
+    </form>
+  </div>
+</div>

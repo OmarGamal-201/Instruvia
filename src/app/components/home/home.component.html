@@ -1,0 +1,220 @@
+<nav class="navbar" [ngClass]="{'dark-mode': isDarkMode}">
+  <div class="nav-left">
+    <span class="logo-text">Instruvia</span>
+  </div>
+
+  <ul class="nav-center">
+    <li routerLink="/home" routerLinkActive="active">Home</li>
+    <li routerLink="/courses" routerLinkActive="active">Courses</li>
+    <li routerLink="/consultions" routerLinkActive="active">Consultation</li>
+    <li routerLink="/about" routerLinkActive="active">About</li>
+  </ul>
+
+  <div class="nav-right">
+    <button class="btn-get-started" *ngIf="!isLoggedIn" (click)="goLogin()">Get Started</button>
+
+    <div *ngIf="isLoggedIn" class="profile-btn">
+      <button (click)="goProfile()">userRole</button>
+    </div>
+
+    <button class="btn-login" *ngIf="!isLoggedIn" (click)="goLogin()">Login</button>
+
+    <button class="btn-theme" (click)="toggleDarkMode()">
+      <span *ngIf="!isDarkMode">🌙</span>
+      <span *ngIf="isDarkMode">☀️</span>
+    </button>
+  </div>
+</nav>
+<section class="hero-section" [ngClass]="{'dark-mode': isDarkMode}">
+  <div class="hero-container">
+    <!-- hero text -->
+    <div class="hero-text">
+      <h1 class="hero-title">Welcome to the Future of Learning</h1>
+      <h2 class="hero-subtitle"><span class="learn-word">Learn </span> <span class="without-word">Without </span> <span
+          class="limits-word">Limits</span></h2>
+      <p class="hero-description">
+        Access world-class courses and get personalized mentorship from industry experts. Transform your skills, advance
+        your career
+      </p>
+
+      <div class="hero-buttons">
+        <button class="btn-primary" (click)="goCourses()">Browse Courses</button>
+        <button class="btn-secondary" (click)="goConsultation()">Book Consultation</button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number">50K+</span>
+          <span class="stat-label">Active Students</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">1,200+</span>
+          <span class="stat-label">Expert Instructors</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">5,000+</span>
+          <span class="stat-label">Quality Courses</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">98%</span>
+          <span class="stat-label">Success Rate</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- hero image-->
+    <div class="hero-image">
+      <img src="../../assets/Gemini_Generated_Image_lwqxyilwqxyilwqx.png" alt="Learning Image">
+    </div>
+  </div>
+
+  <!-- search -->
+  <div class="hero-search">
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Search courses, instructors..."
+      (keyup.enter)="performSearch()">
+    <button (click)="performSearch()">Search</button>
+  </div>
+</section>
+<!-- Categories Section -->
+<section class="categories-section" [ngClass]="{'dark-mode': isDarkMode}">
+  <div class="categories-header">
+    <h2>{{ 'Explore Categories' }}</h2>
+    <p>{{ 'Discover courses across diverse topics' }}</p>
+  </div>
+
+  <div class="categories-grid">
+    <div class="category-card" *ngFor="let category of categories" (click)="goCategory(category.name)">
+      <div class="category-icon">
+        <img [src]="category.icon" [alt]="category.name">
+      </div>
+      <h3>{{ category.name }}</h3>
+      <p>{{ category.courses }} courses</p>
+    </div>
+  </div>
+</section>
+<!-- Featured Courses Section -->
+<section class="featured-courses-section" [ngClass]="{'dark-mode': isDarkMode}">
+  <div class="featured-header">
+    <div class="featured-text">
+      <h2>{{ 'Featured Courses' }}</h2>
+      <p>{{ 'Handpicked courses for you' }}</p>
+    </div>
+    <button class="btn-view-all" (click)="goCourses()">{{ 'View All' }}</button>
+  </div>
+
+  <div class="featured-grid">
+    <div class="course-card" *ngFor="let course of featuredCourses">
+      <div class="course-image">
+        <img [src]="course.image" [alt]="course.title">
+        <span class="course-category">{{ course.category }}</span>
+      </div>
+      <div class="course-info">
+        <h3>{{ course.title }}</h3>
+        <p class="instructor">{{ course.instructor }}</p>
+        <div class="course-stats">
+          <span>{{ course.rating }} ⭐</span>
+          <span>{{ course.students }} students</span>
+          <span>{{ course.duration }}h</span>
+          <span>{{ course.lessons }} lessons</span>
+        </div>
+        <p class="course-price">${{ course.price }}</p>
+        <button class="btn-enroll" (click)="goEnrollment(course)">{{ 'Enroll Now' }}</button>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Mentorship Section -->
+<section class="mentorship-section" [ngClass]="{'dark-mode': isDarkMode}">
+  <div class="mentorship-card">
+    <div class="mentorship-icon">
+      <img src="../../assets/video-call.png" alt="Video Icon">
+    </div>
+    <h2>{{ 'Get Personalized Mentorship' }}</h2>
+    <p>
+      {{ 'Book 1-on-1 live sessions with expert instructors. Get personalized feedback and accelerate your learning.' }}
+    </p>
+    <button class="btn-book-now" (click)="goConsultation()">{{ 'Book now' }}</button>
+  </div>
+</section>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Left Section -->
+    <div class="footer-brand">
+      <h2 class="logo"><img src="../../../assets/logo.png" alt=""> Instruvia</h2>
+      <p>Empowering learners worldwide with quality education and expert consultation.</p>
+
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <!-- Platform -->
+    <div class="footer-col">
+      <h3>Platform</h3>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">How It Works</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+
+    <!-- Resources -->
+    <div class="footer-col">
+      <h3>Resources</h3>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Community</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Legal -->
+    <div class="footer-col">
+      <h3>Legal</h3>
+      <ul>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+        <li><a href="#">Refund Policy</a></li>
+      </ul>
+    </div>
+
+    <!-- Learn -->
+    <div class="footer-col">
+      <h3>Learn</h3>
+      <ul>
+        <li><a href="#">Browse Courses</a></li>
+        <li><a href="#">Find Instructors</a></li>
+        <li><a href="#">Book Consultation</a></li>
+        <li><a href="#">Become Instructor</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <div class="bottom-item">
+      <i class="fa-solid fa-envelope"></i> support@instruvia.com
+    </div>
+
+    <div class="bottom-item">
+      <i class="fa-solid fa-phone"></i> +1 (555) 123-4567
+    </div>
+
+    <div class="bottom-item">
+      <i class="fa-solid fa-location-dot"></i> San Francisco, CA
+    </div>
+  </div>
+
+  <p class="copyright">
+    © 2025 Instruvia. All rights reserved. Built with passion for education.
+  </p>
+</footer>

@@ -1,0 +1,228 @@
+.dashboard-section {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr;
+  gap: 30px;
+  /* margin-top: 25px; */
+  margin-bottom: 50px;
+}
+
+/* ===========================
+   LEFT: Earnings Card
+   =========================== */
+.earnings-card {
+  background: #ffffff;
+  padding: 28px;
+  margin-top: -180px;
+  border-radius: 22px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.earnings-card h2 {
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tabs {
+  background: #f3f4ff;
+  padding: 6px;
+  border-radius: 14px;
+}
+
+.tabs button {
+  border: none;
+  background: transparent;
+  padding: 6px 16px;
+  font-size: 15px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #7b7b7b;
+}
+
+.tabs button.active {
+  background: #7366ff;
+  color: white;
+}
+
+/* CHART BOX EXACT MATCH */
+.chart-area {
+  margin-top: 35px;
+  height: 320px;
+  border-radius: 18px;
+
+  background: linear-gradient(135deg,
+      #eef0ff 0%,
+      #faf7ff 100%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-area .icon {
+  font-size: 65px;
+  color: #4a3aff;
+  margin-bottom: 12px;
+}
+
+.chart-area p {
+  margin-top: 10px;
+  font-size: 17px;
+  color: #555;
+}
+
+/* ===========================
+   RIGHT: Reviews Card
+   =========================== */
+/* ===== Card Container ===== */
+.reviews-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 22px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  width: 80%;
+  margin-left: 10px;
+  margin-top: 30px;
+}
+
+.reviews-card h2 {
+  margin: 0 0 20px 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ===== Review Row (Left + Right) ===== */
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 18px;
+}
+
+/* LEFT SIDE — Name + Comment */
+.review-left .name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+.review-left .comment {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+  max-width: 190px;
+  /* نفس العرض الظاهر في الصورة */
+}
+
+/* RIGHT SIDE — Stars + Time */
+.review-right {
+  text-align: right;
+}
+
+.review-right .stars {
+  font-size: 14px;
+  color: #ffb400;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.review-right .time {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Divider Line */
+.divider {
+  height: 1px;
+  background: #eee;
+  margin: 10px 0 20px 0;
+}
+
+/* ===========================
+   Responsive
+   =========================== */
+@media (max-width: 992px) {
+  .dashboard-section {
+    grid-template-columns: 1fr;
+    /* الكروت تبقى تحت بعض */
+    gap: 20px;
+  }
+
+  .earnings-card {
+    margin-top: 0;
+    /* إزالة المارجن السالب على الشاشات الصغيرة */
+  }
+
+  .reviews-card {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .earnings-card h2,
+  .reviews-card h2 {
+    font-size: 20px;
+  }
+
+  .tabs button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .chart-area {
+    height: 240px;
+  }
+
+  .chart-area .icon {
+    font-size: 50px;
+  }
+
+  .review-left .comment {
+    max-width: 100%;
+  }
+
+  .review-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .review-right {
+    margin-top: 8px;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .earnings-card,
+  .reviews-card {
+    padding: 16px;
+  }
+
+  .tabs {
+    padding: 4px;
+  }
+
+  .tabs button {
+    padding: 5px 10px;
+    font-size: 13px;
+  }
+
+  .chart-area {
+    height: 200px;
+  }
+}

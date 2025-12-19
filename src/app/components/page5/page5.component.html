@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+
+
+
+
+<div class="container">
+
+
+  <!-- Back -->
+  <button class="back-btn" (click)="goBack()">
+    <span>&larr;</span> Back
+  </button>
+
+  <h1 class="title">Book Your Consultation</h1>
+  <p class="steps">Step 5 of 5</p>
+
+  <div class="content">
+
+    <!-- LEFT FORM -->
+    <div class="left-box">
+
+      <!-- Steps -->
+      <div class="steps-wrapper">
+        <div class="step">
+          <div class="circle done">✓</div>
+          <span>Type</span>
+        </div>
+        <div class="line"></div>
+
+        <div class="step">
+          <div class="circle done">✓</div>
+          <span>Date</span>
+        </div>
+        <div class="line"></div>
+
+        <div class="step">
+          <div class="circle done">✓</div>
+          <span>Time</span>
+        </div>
+        <div class="line"></div>
+
+        <div class="step">
+          <div class="circle done">✓</div>
+          <span>Info</span>
+        </div>
+        <div class="line"></div>
+
+        <div class="step">
+          <div class="circle active">5</div>
+          <span>Payment</span>
+        </div>
+      </div>
+
+      <h2 class="section-title">Payment Details</h2>
+
+      <form>
+
+       <label>Card Number</label>
+  <div class="input-wrapper icon">
+    <input
+      type="text"
+      [ngModel]="cardNumber"
+      (input)="formatCardNumber($event)"
+      name="cardNumber"
+      placeholder="1234 5678 9012 3456"
+      maxlength="19">
+    <i class="icon-card">💳</i>
+  </div>
+
+  <label>Cardholder Name</label>
+  <div class="input-wrapper">
+    <input type="text" [(ngModel)]="cardHolder" name="cardHolder" placeholder="John Doe">
+  </div>
+
+  <div class="two-cols">
+    <div class="col">
+      <label>Expiry Date</label>
+      <div class="input-wrapper">
+        <input
+          type="text"
+          [ngModel]="expiry"
+          (input)="formatExpiry($event)"
+          name="expiry"
+          placeholder="MM/YY"
+          maxlength="5">
+      </div>
+    </div>
+
+    <div class="col">
+      <label>CVV</label>
+      <div class="input-wrapper">
+        <input
+          type="text"
+          [ngModel]="cvv"
+          (input)="formatCVV($event)"
+          name="cvv"
+          placeholder="123"
+          maxlength="3">
+      </div>
+    </div>
+  </div>
+
+        <div class="secure-box">
+          <span class="lock">🔒</span>
+          Your payment information is encrypted and secure
+        </div>
+
+        <div class="policy">
+          <h4>Cancellation Policy</h4>
+          <p>Free cancellation up to 24 hours before the session. Cancel within 24 hours for a 50% refund.</p>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="back" (click)="goBack()">Back</button>
+          <button type="button" class="next" (click)="pay()" *ngIf="booking.bookingData$ | async as data">
+            Pay ${{ data.total }}
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+        <app-summary></app-summary>
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="footer">
+    <div class="footer-container">
+
+        <!-- Left Section -->
+        <div class="footer-brand">
+            <h2 class="logo"><img src="../../../assets/logo.png" alt=""> Instruvia</h2>
+            <p>Empowering learners worldwide with quality education and expert consultation.</p>
+
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <!-- Platform -->
+        <div class="footer-col">
+            <h3>Platform</h3>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">How It Works</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+        </div>
+
+        <!-- Resources -->
+        <div class="footer-col">
+            <h3>Resources</h3>
+            <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">FAQs</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="footer-col">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Cookie Policy</a></li>
+                <li><a href="#">Refund Policy</a></li>
+            </ul>
+        </div>
+
+        <!-- Learn -->
+        <div class="footer-col">
+            <h3>Learn</h3>
+            <ul>
+                <li><a href="#">Browse Courses</a></li>
+                <li><a href="#">Find Instructors</a></li>
+                <li><a href="#">Book Consultation</a></li>
+                <li><a href="#">Become Instructor</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <div class="bottom-item">
+            <i class="fa-solid fa-envelope"></i> support@instruvia.com
+        </div>
+
+        <div class="bottom-item">
+            <i class="fa-solid fa-phone"></i> +1 (555) 123-4567
+        </div>
+
+        <div class="bottom-item">
+            <i class="fa-solid fa-location-dot"></i> San Francisco, CA
+        </div>
+    </div>
+
+    <p class="copyright">
+        © 2025 Instruvia. All rights reserved. Built with passion for education.
+    </p>
+</footer>
+
+
+
+
+
+</body>
+</html>

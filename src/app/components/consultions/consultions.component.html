@@ -1,0 +1,157 @@
+<div [attr.dir]="isRTL ? 'rtl' : 'ltr'">
+  <!-- Language Toggle Button -->
+  <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+    <button class="lang-toggle-btn" type="button" (click)="toggleLanguage()">
+      <i class="bi bi-translate"></i>
+      {{ currentLanguage === 'en' ? 'العربية' : 'English' }}
+    </button>
+  </div>
+
+  <div class="header">
+    <h1>{{ translate('header.title') }}</h1>
+    <p>{{ translate('header.subtitle') }}</p>
+    <form [formGroup]="filterForm">
+      <div class="search-bar">
+        <input
+          type="text"
+          [placeholder]="translate('search.placeholder')"
+          formControlName="searchQuery">
+        <button type="button">{{ translate('search.button') }}</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="container">
+    <aside class="sidebar">
+      <form [formGroup]="filterForm">
+        <div class="filter-section">
+          <h3>{{ translate('filter.title') }}</h3>
+          <div class="filter-item">
+            <input type="checkbox" id="all" disabled checked>
+            <label for="all">{{ translate('filter.all') }}</label>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h3>{{ translate('filter.topic') }}</h3>
+          <div formArrayName="topics">
+            <div class="filter-item" *ngFor="let topic of topicsList; let i = index">
+              <input
+                type="checkbox"
+                [id]="'topic-' + i"
+                [formControlName]="i">
+              <label [for]="'topic-' + i">{{ translate(topic.label) }}</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h3>{{ translate('filter.price') }}</h3>
+          <div formArrayName="priceRanges">
+            <div class="filter-item" *ngFor="let price of priceRangesList; let i = index">
+              <input
+                type="checkbox"
+                [id]="'price-' + i"
+                [formControlName]="i">
+              <label [for]="'price-' + i">{{ price.label }}</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h3>{{ translate('filter.duration') }}</h3>
+          <div formArrayName="durations">
+            <div class="filter-item" *ngFor="let duration of durationsList; let i = index">
+              <input
+                type="checkbox"
+                [id]="'duration-' + i"
+                [formControlName]="i">
+              <label [for]="'duration-' + i">{{ translate(duration.label) }}</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h3>{{ translate('filter.rating') }}</h3>
+          <div formArrayName="ratings">
+            <div class="filter-item" *ngFor="let rating of ratingsList; let i = index">
+              <input
+                type="checkbox"
+                [id]="'rating-' + i"
+                [formControlName]="i">
+              <label [for]="'rating-' + i">{{ translate(rating.label) }}</label>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="apply-btn" (click)="applyFilters()">{{ translate('filter.apply') }}</button>
+      </form>
+    </aside>
+
+    <main class="main-content">
+      <div class="results-header">
+        <span>{{ translate('results.showing') }} {{ displayedConsultants.length }} {{ translate('results.of') }} {{ getTotalResults() }} {{ translate('results.consultants') }}</span>
+        <div class="view-mode">
+          <button class="view-btn" type="button" (click)="clearFilters()">{{ translate('filter.clear') }}</button>
+        </div>
+      </div>
+
+      <div class="consultant-card" *ngFor="let consultant of displayedConsultants">
+        <img [src]="consultant.image" [alt]="consultant.name" class="consultant-image">
+        <div class="consultant-info">
+          <div class="consultant-name">{{ consultant.name }}</div>
+          <div class="consultant-title">{{ consultant.title }} • {{ consultant.experience }}</div>
+          <span class="consultant-specialty">{{ consultant.specialty }}</span>
+          <div class="consultant-details">
+            <div class="detail-item">
+              <span>💬</span>
+              <span>${{ consultant.price }}</span>
+              <span>{{ translate('consultant.session') }}</span>
+            </div>
+            <div class="detail-item">
+              <span>🕐</span>
+              <span>{{ consultant.availability }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="consultant-actions">
+          <div class="rating">
+            ⭐ {{ consultant.rating }} ({{ consultant.reviewCount }})
+          </div>
+          <button class="book-btn" type="button" (click)="bookConsultation(consultant)">{{ translate('consultant.book') }}</button>
+        </div>
+      </div>
+
+      <div class="load-more" *ngIf="hasMore()">
+        <button class="load-more-btn" type="button" (click)="loadMore()">{{ translate('consultant.load') }}</button>
+      </div>
+
+      <div *ngIf="displayedConsultants.length === 0" style="text-align: center; padding: 40px; color: #666;">
+        <p>{{ translate('consultant.none') }}</p>
+        <button class="apply-btn" type="button" (click)="clearFilters()" style="max-width: 200px; margin: 20px auto;">{{ translate('filter.clear') }}</button>
+      </div>
+    </main>
+  </div>
+
+  <section class="how-it-works">
+    <h2>{{ translate('how.title') }}</h2>
+    <p>{{ translate('how.subtitle') }}</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">🔍</div>
+        <h3>{{ translate('how.step1.title') }}</h3>
+        <p>{{ translate('how.step1.desc') }}</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">📅</div>
+        <h3>{{ translate('how.step2.title') }}</h3>
+        <p>{{ translate('how.step2.desc') }}</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">🎯</div>
+        <h3>{{ translate('how.step3.title') }}</h3>
+        <p>{{ translate('how.step3.desc') }}</p>
+      </div>
+    </div>
+  </section>
+</div>

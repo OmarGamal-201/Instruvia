@@ -1,0 +1,284 @@
+/* ====== GENERAL ====== */
+:host {
+  display: block;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+/* ====== RTL SUPPORT ====== */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .text-start {
+  text-align: right !important;
+}
+
+[dir="rtl"] .text-end {
+  text-align: left !important;
+}
+
+[dir="rtl"] .ms-1 {
+  margin-left: 0 !important;
+  margin-right: 0.25rem !important;
+}
+
+[dir="rtl"] .ms-2 {
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
+}
+
+[dir="rtl"] .ms-3 {
+  margin-left: 0 !important;
+  margin-right: 1rem !important;
+}
+
+[dir="rtl"] .me-1 {
+  margin-right: 0 !important;
+  margin-left: 0.25rem !important;
+}
+
+[dir="rtl"] .me-2 {
+  margin-right: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+[dir="rtl"] .me-3 {
+  margin-right: 0 !important;
+  margin-left: 1rem !important;
+}
+
+/* Fix icon spacing in RTL */
+[dir="rtl"] .bi-clock,
+[dir="rtl"] .bi-play-btn,
+[dir="rtl"] .bi-exclamation-triangle {
+  margin-right: 0 !important;
+  margin-left: 0.25rem;
+}
+
+/* Don't flip certain icons */
+[dir="rtl"] .bi-star-fill,
+[dir="rtl"] .bi-book,
+[dir="rtl"] .bi-calendar-event,
+[dir="rtl"] .bi-activity,
+[dir="rtl"] .bi-lightbulb,
+[dir="rtl"] .bi-translate {
+  transform: none;
+}
+
+/* ====== BRAND COLORS ====== */
+.text-brand, .text-primary-custom {
+  color: #4f46e5 !important;
+}
+
+.bg-brand, .bg-primary-custom {
+  background-color: #4f46e5 !important;
+}
+
+.bg-brand-light {
+  background-color: #e0e7ff !important;
+}
+
+/* ====== GRADIENT BOXES ====== */
+.gradient-box,
+.course-icon,
+.avatar-gradient,
+.recommend-icon {
+  background: linear-gradient(135deg, #6366f1, #9333ea);
+  border-radius: 0.75rem;
+}
+
+/* ====== SHADOW ====== */
+.shadow-soft,
+.hover-shadow-sm:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+  transition: .2s ease;
+}
+
+/* ====== AVATAR ====== */
+.avatar-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #4f46e5;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* ====== CONSULTATION AVATAR ====== */
+.avatar-gradient {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ====== RECOMMENDED COURSE ICON ====== */
+.recommend-icon {
+  width: 64px;
+  height: 64px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #6366f1, #9333ea) !important;
+  border-color:  #9333ea !important;
+}
+
+.head-btn{
+  border-color: #d0d3dd !important;
+}
+
+.head-btn:hover{
+  background-color: #dadbdd !important;
+}
+
+.stat {
+  transition: transform .5s ease;
+  -webkit-transition: transform .5s ease;
+  -moz-transition: transform .5s ease;
+  -ms-transition: transform .5s ease;
+  -o-transition: transform .5s ease;
+}
+.stat:hover {
+  transform: translateY(-8px);
+  -webkit-transform: translateY(-8px);
+  -moz-transform: translateY(-8px);
+  -ms-transform: translateY(-8px);
+  -o-transform: translateY(-8px);
+}
+
+/* ====== STATUS COLORS ====== */
+.badge-green { background-color: #f0fdf4 !important; color: #16a34a !important; }
+.badge-blue  { background-color: #eff6ff !important; color: #2563eb !important; }
+.badge-purple{ background-color: #faf5ff !important; color: #9333ea !important; }
+.badge-orange{ background-color: #fff7ed !important; color: #ea580c !important; }
+
+/* ====== PROGRESS BAR ====== */
+.progress-bar {
+  transition: width .3s ease;
+  -webkit-transition: width .3s ease;
+  -moz-transition: width .3s ease;
+  -ms-transition: width .3s ease;
+  -o-transition: width .3s ease;
+  background: linear-gradient(135deg, #6366f1, #9333ea) !important;
+}
+
+/* RTL Progress Bar */
+[dir="rtl"] .progress-bar {
+  transform-origin: right;
+}
+
+/* ====== RECENT ACTIVITY ICON BOX ====== */
+.activity-icon {
+  padding: .5rem;
+  border-radius: .5rem;
+}
+
+/* ====== HEADER ACTIVE STATE ====== */
+.nav-active,
+button.border-primary.pb-1.fw-semibold {
+  color: #4f46e5 !important;
+  border-bottom: 2px solid #4f46e5 !important;
+  font-weight: 600 !important;
+}
+
+.continue-card{
+  transition: transform .35s ease;
+  -webkit-transition: transform .35s ease;
+  -moz-transition: transform .35s ease;
+  -ms-transition: transform .35s ease;
+  -o-transition: transform .35s ease;
+}
+
+.continue-card:hover{
+  transform: translateX(8px);
+  -webkit-transform: translateX(8px);
+  -moz-transform: translateX(8px);
+  -ms-transform: translateX(8px);
+  -o-transform: translateX(8px);
+}
+
+/* RTL hover effect for continue cards */
+[dir="rtl"] .continue-card:hover{
+  transform: translateX(-8px);
+  -webkit-transform: translateX(-8px);
+  -moz-transform: translateX(-8px);
+  -ms-transform: translateX(-8px);
+  -o-transform: translateX(-8px);
+}
+
+.consultation-card {
+  transition: transform .5s ease;
+  -webkit-transition: transform .5s ease;
+  -moz-transition: transform .5s ease;
+  -ms-transition: transform .5s ease;
+  -o-transition: transform .5s ease;
+}
+
+.consultation-card:hover{
+  transform: scale(1.01);
+  -webkit-transform: scale(1.01);
+  -moz-transform: scale(1.01);
+  -ms-transform: scale(1.01);
+  -o-transform: scale(1.01);
+}
+
+/* ====== ANIMATION ====== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn .3s ease;
+}
+
+/* ====== ARABIC FONT SUPPORT ====== */
+[dir="rtl"] {
+  font-family: 'calibri', 'Segoe UI', 'Arial', sans-serif;
+}
+
+[dir="rtl"] .fw-bold {
+  font-weight: 700;
+}
+
+/* Language toggle button */
+.btn-outline-primary {
+  border: 1px solid #6366f1;
+  color: #6366f1;
+}
+
+.btn-outline-primary:hover {
+  background-color: #6366f1;
+  color: white;
+}
+
+/* RTL flex adjustments */
+[dir="rtl"] .d-flex {
+  direction: rtl;
+}
+
+/* RTL gap fixes for flex containers */
+[dir="rtl"] .gap-3 > * + * {
+  margin-right: 1rem;
+  margin-left: 0;
+}
+
+[dir="rtl"] .gap-4 > * + * {
+  margin-right: 1.5rem;
+  margin-left: 0;
+}

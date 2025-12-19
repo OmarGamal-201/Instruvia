@@ -1,0 +1,25 @@
+<div class="course-performance-header">
+  <h2>Course Performance</h2>
+
+
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Course</th>
+      <th>Students</th>
+      <th>Rating</th>
+      <th>Revenue</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let c of courses">
+      <td>{{ c.name }}</td>
+      <td>{{ c.students }}</td>
+      <td>⭐ {{ c.rating }}</td>
+      <td>${{ c.revenue }}</td>
+    </tr>
+  </tbody>
+</table>

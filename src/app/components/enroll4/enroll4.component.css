@@ -1,0 +1,218 @@
+/* Container الرئيسي — نفس المسافات والعرض زي الـ Description */
+.qa-container {
+  background: #fff;
+  border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+  border: 1px solid #e6e6e6;
+
+  width: 80%;
+  max-width: 850px;
+  margin: 30px auto;
+}
+
+/* عنوان القسم */
+.qa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.qa-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1b1b1b;
+}
+
+/* زرار Ask Question */
+/* .ask-btn {
+  padding: 10px 18px;
+  font-size: 15px;
+  border: 1px solid #c8c8c8;
+  background: #fff;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.ask-btn:hover {
+  background: #f3f3f3;
+} */
+
+/* الكارد */
+.qa-card {
+  border: 1px solid #e6e6e6;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 25px;
+}
+
+/* بيانات المستخدم */
+.qa-user {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #007bff;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.avatar.purple {
+  background: #7a39ff;
+}
+
+.question {
+  margin-top: 4px;
+  color: #5b5b5b;
+  font-size: 15px;
+}
+
+/* الإجابة */
+.qa-answer {
+  background: #eef2ff;
+  padding: 15px 20px;
+  margin: 15px 0;
+  border-radius: 10px;
+  color: #3c3c3c;
+  font-size: 15px;
+}
+
+/* الفوتر */
+.qa-footer {
+  display: flex;
+  gap: 20px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #f1f5f9;
+  color :#444;
+}
+
+.like-btn {
+  font-size: 14px;
+  color: #64748b;
+  cursor: pointer;
+  /* عشان الماوس يبقى شكل يد */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  padding: 5px 10px;
+  border-radius: 6px;
+  user-select: none;
+  /* عشان النص ميتعملوش تحديد مع الضغط السريع */
+}
+
+.like-btn:hover {
+  background-color: #f0f0f0;
+}
+
+/* لما يكون معمول لايك */
+.active-like {
+  color: #7b2efb !important;
+  /* لون البراند */
+  font-weight: bold;
+}
+
+.active-like i {
+  transform: scale(1.1);
+  /* تكبير بسيط للأيقونة */
+}
+
+
+.chat-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #6b43a7;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.chat-box {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 300px;
+  height: 400px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  z-index: 999;
+}
+
+.chat-box.open {
+  display: flex;
+}
+
+.chat-header {
+  background: #6b43a7;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #f1f1f1;
+}
+
+.chat-footer {
+  padding: 10px;
+  display: flex;
+  gap: 5px;
+}
+
+.chat-footer input {
+  flex: 1;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* تنسيق الرسائل */
+.my-msg {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.my-msg .bubble {
+  background: #6b43a7;
+  color: white;
+  display: inline-block;
+  padding: 8px;
+  border-radius: 10px 10px 0 10px;
+}
+
+.other-msg {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.other-msg .bubble {
+  background: #e4e6eb;
+  color: black;
+  display: inline-block;
+  padding: 8px;
+  border-radius: 10px 10px 10px 0;
+}
+

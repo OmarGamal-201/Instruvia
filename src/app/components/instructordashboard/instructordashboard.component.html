@@ -1,0 +1,61 @@
+
+<div class="container">
+
+  <h2 class="title">Instructor Dashboard 🎓</h2>
+  <p class="subtitle">Track your teaching performance and earnings</p>
+
+<div class="stats-row">
+  <app-stats-card
+    icon="fa-solid fa-dollar-sign"
+    class="icon-earnings"
+    [value]="(myStats.totalRevenue | currency) || '$0'"
+    label="Total Earnings"
+    percent="12">
+  </app-stats-card>
+
+  <app-stats-card
+    icon="fa-solid fa-user-graduate"
+    class="icon-students"
+    [value]="myStats.totalEnrollments.toString()"
+    label="Total Students"
+    percent="8">
+  </app-stats-card>
+
+  <app-stats-card
+    icon="fa-solid fa-book-open"
+    class="icon-courses"
+    [value]="myStats.totalCourses.toString()"
+    label="Active Courses"
+    percent="2">
+  </app-stats-card>
+
+  <app-stats-card
+    icon="fa-solid fa-star"
+    class="icon-rating"
+    [value]="myStats.averageRating.toString()"
+    label="Average Rating"
+    percent="5">
+  </app-stats-card>
+</div>
+
+  <div class="content">
+    <app-course-table></app-course-table>
+    <app-quick-actions></app-quick-actions>
+  </div>
+
+  <div class="content2">
+    <app-recent-dashboard></app-recent-dashboard>
+  </div>
+
+  <div>
+    <app-monthly-earnings></app-monthly-earnings>
+  </div>
+
+  <div class="message-section">
+    <app-student-massege></app-student-massege>
+  </div>
+
+</div>
+
+
+

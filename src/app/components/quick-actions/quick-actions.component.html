@@ -1,0 +1,74 @@
+<div class="quick-actions-container">
+  <p>Quick Actions</p>
+
+  <div class="action" *ngFor="let item of actions"
+    [ngClass]="{ 'active': item.active }"
+    (click)="onActionClick(item)">
+    <div class="icon">{{ item.icon }}</div>
+    <div class="label">{{ item.label }}</div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="activeModal" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+
+    <div *ngIf="activeModal === 'create'">
+      <h3>Create New Course 🎓</h3>
+      <div class="form-group">
+        <label>Course Title</label>
+        <input type="text" [(ngModel)]="courseForm.title" placeholder="Enter course title">
+      </div>
+      <div class="form-group">
+        <label>Duration (Hours)</label>
+        <input type="number" [(ngModel)]="courseForm.duration" placeholder="e.g. 20">
+      </div>
+      <div class="form-group">
+        <label>Price ($)</label>
+        <input type="number" [(ngModel)]="courseForm.price" placeholder="e.g. 99">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea [(ngModel)]="courseForm.description" rows="3"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+        <button class="btn-save" (click)="publishCourse()">Publish Course</button>
+      </div>
+    </div>
+
+    <div *ngIf="activeModal === 'availability'">
+      <h3>Set Your Availability 📅</h3>
+      <div class="form-group">
+        <label>Select Date</label>
+        <input type="date" [(ngModel)]="availabilityForm.date">
+      </div>
+      <div class="form-row" style="display: flex; gap: 10px;">
+        <div class="form-group" style="flex: 1;">
+          <label>From</label>
+          <input type="time" [(ngModel)]="availabilityForm.startTime">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>To</label>
+          <input type="time" [(ngModel)]="availabilityForm.endTime">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+        <button class="btn-save" (click)="saveAvailability()">Save Schedule</button>
+      </div>
+    </div>
+
+    <div *ngIf="activeModal === 'upload'">
+      <h3>Upload Content 📤</h3>
+      <div class="form-group">
+        <label>Choose File</label>
+        <input type="file" style="border: none; padding: 0;">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+        <button class="btn-save" (click)="uploadFile()">Upload Now</button>
+      </div>
+    </div>
+
+  </div>
+</div>
