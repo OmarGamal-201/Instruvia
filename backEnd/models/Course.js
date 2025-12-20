@@ -22,7 +22,7 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Category is required'],
     enum: [
-      'Programming', 'Design', 'Business', 'Marketing', 
+      'Programming', 'Design', 'Business', 'Marketing',
       'Photography', 'Music', 'Data Science', 'Personal Development',
       'Health & Fitness', 'Language', 'Academic', 'Other'
     ]
@@ -118,7 +118,7 @@ const courseSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['draft', 'published', 'archived'],
-    default: 'draft'
+    default: 'published'
   },
   enrolledStudents: [{
     student: {
@@ -236,7 +236,7 @@ courseSchema.methods.calculateRating = function() {
 
 // Method to check if user is enrolled
 courseSchema.methods.isEnrolled = function(studentId) {
-  return this.enrolledStudents.some(enrollment => 
+  return this.enrolledStudents.some(enrollment =>
     enrollment.student.toString() === studentId.toString()
   );
 };
@@ -260,7 +260,7 @@ courseSchema.methods.enrollStudent = function(studentId) {
 
 // Method to update student progress
 courseSchema.methods.updateProgress = function(studentId, lessonId) {
-  const enrollment = this.enrolledStudents.find(enrollment => 
+  const enrollment = this.enrolledStudents.find(enrollment =>
     enrollment.student.toString() === studentId.toString()
   );
 

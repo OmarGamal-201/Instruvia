@@ -21,9 +21,10 @@ exports.createCourse = async (req, res) => {
     } = req.body;
 
     // Validate instructor approval
-    if (req.user.role !== 'instructor' || !req.user.isInstructorApproved) {
-      return res.status(403).json({ 
-        message: 'Only approved instructors can create courses' 
+    if (req.user.role !== 'instructor' && !req.user.isInstructorApproved) {
+
+      return res.status(403).json({
+        message: 'Only approved instructors can create courses'
       });
     }
 
@@ -65,7 +66,7 @@ exports.getCourses = async (req, res) => {
 
     // Build filter
     const filter = { status: 'published' };
-    
+
     if (req.query.category) filter.category = req.query.category;
     if (req.query.level) filter.level = req.query.level;
     if (req.query.price_min || req.query.price_max) {
@@ -73,9 +74,22 @@ exports.getCourses = async (req, res) => {
       if (req.query.price_min) filter.price.$gte = parseFloat(req.query.price_min);
       if (req.query.price_max) filter.price.$lte = parseFloat(req.query.price_max);
     }
+
+    // FIXED: Use regex search instead of $text search
     if (req.query.search) {
-      filter.$text = { $search: req.query.search };
+      const searchTerm = req.query.search.trim();
+      filter.$or = [
+        { title: { $regex: searchTerm, $options: 'i' } },
+        { description: { $regex: searchTerm, $options: 'i' } },
+        { category: { $regex: searchTerm, $options: 'i' } }
+      ];
+
+      // If tags exist, also search in tags
+      if (req.query.tags) {
+        filter.$or.push({ tags: { $regex: searchTerm, $options: 'i' } });
+      }
     }
+
     if (req.query.tags) {
       const tags = Array.isArray(req.query.tags) ? req.query.tags : [req.query.tags];
       filter.tags = { $in: tags };
@@ -97,7 +111,7 @@ exports.getCourses = async (req, res) => {
         sort = { createdAt: -1 };
         break;
       case 'popular':
-        sort = { 'enrolledStudents.length': -1 };
+        sort = { enrolledStudents: -1 }; // Changed from 'enrolledStudents.length' to just 'enrolledStudents'
         break;
       default:
         sort = { createdAt: -1 };
@@ -120,6 +134,7 @@ exports.getCourses = async (req, res) => {
 
     res.status(200).json(formatPaginatedResponse(courses, pagination));
   } catch (error) {
+    console.error('Error in getCourses:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -143,7 +158,7 @@ exports.getCourseById = async (req, res) => {
     // Check if user is enrolled
     let isEnrolled = false;
     let userProgress = null;
-    
+
     if (req.user) {
       const enrollment = course.enrolledStudents.find(
         enrollment => enrollment.student.toString() === req.user.id
@@ -191,15 +206,15 @@ exports.updateCourse = async (req, res) => {
 
     // Check if user is the instructor
     if (course.instructor.toString() !== req.user.id) {
-      return res.status(403).json({ 
-        message: 'Only course instructor can update this course' 
+      return res.status(403).json({
+        message: 'Only course instructor can update this course'
       });
     }
 
     // Update allowed fields
     const allowedFields = [
-      'title', 'description', 'category', 'level', 'price', 
-      'thumbnail', 'previewVideo', 'language', 'duration', 
+      'title', 'description', 'category', 'level', 'price',
+      'thumbnail', 'previewVideo', 'language', 'duration',
       'lessons', 'requirements', 'whatYouWillLearn', 'tags', 'status'
     ];
 
@@ -233,15 +248,15 @@ exports.deleteCourse = async (req, res) => {
 
     // Check if user is the instructor
     if (course.instructor.toString() !== req.user.id) {
-      return res.status(403).json({ 
-        message: 'Only course instructor can delete this course' 
+      return res.status(403).json({
+        message: 'Only course instructor can delete this course'
       });
     }
 
     // Check if course has enrolled students
     if (course.enrolledStudents.length > 0) {
-      return res.status(400).json({ 
-        message: 'Cannot delete course with enrolled students' 
+      return res.status(400).json({
+        message: 'Cannot delete course with enrolled students'
       });
     }
 
@@ -296,8 +311,8 @@ exports.addReview = async (req, res) => {
 
     // Check if user is enrolled
     if (!course.isEnrolled(req.user.id)) {
-      return res.status(403).json({ 
-        message: 'Only enrolled students can review this course' 
+      return res.status(403).json({
+        message: 'Only enrolled students can review this course'
       });
     }
 
@@ -307,8 +322,8 @@ exports.addReview = async (req, res) => {
     );
 
     if (existingReview) {
-      return res.status(400).json({ 
-        message: 'You have already reviewed this course' 
+      return res.status(400).json({
+        message: 'You have already reviewed this course'
       });
     }
 
@@ -339,7 +354,7 @@ exports.addReview = async (req, res) => {
 exports.getCategories = async (req, res) => {
   try {
     const categories = [
-      'Programming', 'Design', 'Business', 'Marketing', 
+      'Programming', 'Design', 'Business', 'Marketing',
       'Photography', 'Music', 'Data Science', 'Personal Development',
       'Health & Fitness', 'Language', 'Academic', 'Other'
     ];

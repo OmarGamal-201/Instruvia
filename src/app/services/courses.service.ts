@@ -41,10 +41,12 @@ export interface Lesson {
 export interface CourseFilters {
   category?: string;
   level?: string;
-  minPrice?: number;
-  maxPrice?: number;
+  price_min?: number;
+  price_max?: number;
   rating?: number;
   search?: string;
+  sort?: 'price_low' | 'price_high' | 'rating' | 'newest' | 'popular';
+  tags?: string[];
 }
 
 export interface PaginatedResponse<T> {
@@ -88,12 +90,26 @@ export class CourseService {
 
   constructor(private http: HttpClient) {}
 
-  // Original method - Get courses with category filter
-  getCourses(category?: string): Observable<any> {
+  // Original method - Get courses with any filters (updated to support all backend params)
+  getCourses(filters?: any): Observable<any> {
     let params = new HttpParams();
-    if (category && category !== 'all') {
-      params = params.set('category', category);
+
+    if (filters) {
+      // Add all filter parameters
+      Object.keys(filters).forEach(key => {
+        if (filters[key] !== null && filters[key] !== undefined && filters[key] !== '') {
+          if (Array.isArray(filters[key])) {
+            // Handle array parameters (like tags)
+            filters[key].forEach((value: any) => {
+              params = params.append(key, value);
+            });
+          } else {
+            params = params.set(key, filters[key].toString());
+          }
+        }
+      });
     }
+
     return this.http.get(this.apiUrl, { params });
   }
 
@@ -105,16 +121,21 @@ export class CourseService {
   ): Observable<PaginatedResponse<Course>> {
     let params = new HttpParams()
       .set('page', page.toString())
-      .set('limit', limit.toString())
-      .set('status', 'published'); // Only show published courses
+      .set('limit', limit.toString());
 
     if (filters) {
       if (filters.category) params = params.set('category', filters.category);
       if (filters.level) params = params.set('level', filters.level);
-      if (filters.minPrice) params = params.set('minPrice', filters.minPrice.toString());
-      if (filters.maxPrice) params = params.set('maxPrice', filters.maxPrice.toString());
+      if (filters.price_min) params = params.set('price_min', filters.price_min.toString());
+      if (filters.price_max) params = params.set('price_max', filters.price_max.toString());
       if (filters.rating) params = params.set('rating', filters.rating.toString());
       if (filters.search) params = params.set('search', filters.search);
+      if (filters.sort) params = params.set('sort', filters.sort);
+      if (filters.tags && filters.tags.length > 0) {
+        filters.tags.forEach(tag => {
+          params = params.append('tags', tag);
+        });
+      }
     }
 
     return this.http.get<PaginatedResponse<Course>>(this.apiUrl, { params });
@@ -213,7 +234,7 @@ export class CourseService {
   }> {
     const params = new HttpParams().set('limit', limit.toString());
     return this.http.get<any>(
-      `http://localhost:5000/api/instructors/popular`, 
+      `http://localhost:5000/api/instructors/popular`,
       { params }
     );
   }
@@ -230,12 +251,15 @@ export class CourseService {
   // Get courses by price range
   getCoursesByPriceRange(
     minPrice: number,
-    maxPrice: number
+    maxPrice: number,
+    page: number = 1,
+    limit: number = 10
   ): Observable<PaginatedResponse<Course>> {
     const params = new HttpParams()
-      .set('minPrice', minPrice.toString())
-      .set('maxPrice', maxPrice.toString())
-      .set('status', 'published');
+      .set('price_min', minPrice.toString())
+      .set('price_max', maxPrice.toString())
+      .set('page', page.toString())
+      .set('limit', limit.toString());
 
     return this.http.get<PaginatedResponse<Course>>(this.apiUrl, { params });
   }
