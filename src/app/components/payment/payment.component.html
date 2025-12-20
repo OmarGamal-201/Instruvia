@@ -1,0 +1,116 @@
+<div class="enrollment-container" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'" [class.dark-mode]="isDarkMode">
+  
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Loading course details...</p>
+  </div>
+
+  <main class="main-content" *ngIf="!isLoading && course">
+    <div class="container">
+      <div class="enrollment-grid">
+        
+        <div class="order-summary">
+          <div class="card">
+            <h1 class="page-title">{{ translate('complete_enrollment') }}</h1>
+            <p class="secure-checkout">{{ translate('secure_checkout') }}</p>
+
+            <div class="course-header">
+              <h2 class="course-title">{{ course.title }}</h2>
+              <p class="course-instructor">by {{ course.instructor?.name || 'Expert Instructor' }}</p>
+              
+              <div class="course-meta">
+                <span class="meta-item">
+                  {{ course.duration }} {{ translate('hours') }}
+                </span>
+                <span class="meta-separator">â€¢</span>
+                <span class="meta-item">
+                  {{ formatNumber(course.studentsEnrolled || 0) }} {{ translate('students') }}
+                </span>
+              </div>
+            </div>
+
+            <hr class="divider">
+
+            <h3 class="section-title">{{ translate('order_summary') }}</h3>
+
+            <div class="price-breakdown">
+              <div class="price-row total">
+                <strong>{{ translate('course_price') }}</strong>
+                <strong class="price final-price">${{ course.price }}</strong>
+              </div>
+            </div>
+
+            <hr class="divider">
+
+            <h3 class="section-title">{{ translate('whats_included') }}</h3>
+            <ul class="included-list">
+              <li *ngFor="let item of includedItems" class="included-item">
+                <span class="checkmark">âœ“</span>
+                <span>{{ item.value }} {{ translate(item.text) }}</span>
+              </li>
+            </ul>
+
+            <hr class="divider">
+
+            <h3 class="section-title">{{ translate('payment_breakdown') }}</h3>
+            <div class="payment-table">
+              <div class="payment-row">
+                <span>{{ translate('instructor_earnings') }}</span>
+                <span>${{ instructorEarnings.toFixed(2) }}</span>
+              </div>
+              <div class="payment-row">
+                <span>{{ translate('platform_fee') }} (20%)</span>
+                <span>${{ platformFee.toFixed(2) }}</span>
+              </div>
+              <div class="payment-row total">
+                <strong>{{ translate('total') }}</strong>
+                <strong>${{ course.price }}</strong>
+              </div>
+            </div>
+
+            <div class="guarantee-card">
+              <h4>{{ translate('money_back_guarantee') }}</h4>
+              <p>{{ translate('money_back_description') }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-panel">
+          <div class="sticky-card">
+            <div class="total-display">
+              <span class="total-label">{{ translate('total') }}:</span>
+              <span class="total-amount">${{ course.price }}</span>
+            </div>
+
+            <div class="action-buttons">
+              <a [routerLink]="['/payment2', course._id]" class="btn btn-primary btn-block" (click)="onEnrollClick()">
+                {{ translate('enroll_now') }}
+              </a>
+              
+              <a [routerLink]="['/course', course._id]" class="btn btn-outline btn-block">
+                {{ translate('back_to_course') }}
+              </a>
+            </div>
+
+            <div class="secure-badge">
+              <span class="lock-icon">ðŸ”’</span>
+              <span>{{ translate('secure_checkout') }}</span>
+            </div>
+
+            <div class="payment-methods">
+              <div class="payment-icons">
+                <span class="payment-icon">ðŸ’³</span>
+                <span class="payment-icon">ðŸ’°</span>
+              </div>
+              <p class="payment-note">All secure payment methods supported</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <app-nav></app-nav>
+  <app-footer></app-footer>
+</div>
