@@ -16,6 +16,9 @@ import { Page4Component } from './components/page4/page4.component';
 import { Page5Component } from './components/page5/page5.component';
 import { AdmindashboardComponent } from './components/admindashboard/admindashboard.component';
 import { InstructordashboardComponent } from './components/instructordashboard/instructordashboard.component';
+import { EnrollComponent } from './components/enroll/enroll.component';
+import { CourseEnrollComponent } from './components/course-enroll/course-enroll.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 
 const routes: Routes = [
@@ -32,6 +35,10 @@ const routes: Routes = [
   { path: 'page3', component: Page3Component ,canActivate: [AuthGuard],},
   { path: 'page4', component: Page4Component,canActivate: [AuthGuard], },
   { path: 'page5', component: Page5Component,canActivate: [AuthGuard], },
+  { path: 'enroll/:courseId', component: CourseEnrollComponent, canActivate: [AuthGuard], },
+  { path: 'payment/:courseId', component: PaymentComponent, canActivate: [AuthGuard], },
+
+
 
   // Protected routes - require authentication
   {

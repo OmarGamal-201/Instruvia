@@ -1,10 +1,10 @@
 <div class="payment-page-v2" [class.dark-mode]="currentTheme === 'dark'" [dir]="currentAppLang === 'ar' ? 'rtl' : 'ltr'">
   <div class="container-v2">
-    
+
     <header class="header-v2">
       <div class="header-info-v2">
-        <h1 class="title-v2">💳 {{ 'COMPLETE_ENROLLMENT' | translate }}</h1>
-        <p class="subtitle-v2">🔒 {{ 'SECURE_CHECKOUT' | translate }}</p>
+        <h1 class="title-v2">💳 {{ 'COMPLETE_ENROLLMENT' }}</h1>
+        <p class="subtitle-v2">🔒 {{ 'SECURE_CHECKOUT' }}</p>
       </div>
       <div class="sandbox-control-v2">
         <button class="btn-sandbox-v2" [class.active]="sandboxMode" (click)="toggleSandboxMode()">
@@ -14,32 +14,32 @@
     </header>
 
     <div *ngIf="sandboxMode" class="sandbox-panel-v2">
-      <h3>🧪 {{ 'TEST_MODE' | translate }}</h3>
+      <h3>🧪 {{ 'TEST_MODE' }}</h3>
       <p style="font-size: 0.85rem; margin-bottom: 10px;">
         {{ currentAppLang === 'ar' ? 'انقر على بطاقة لتعبئة البيانات تلقائياً:' : 'Click a card to auto-fill data:' }}
       </p>
       <div class="test-cards-v2">
-        <div *ngFor="let card of testCards" class="test-card-v2" 
-             [class.selected]="selectedTestCard.number === card.number" 
+        <div *ngFor="let card of testCards" class="test-card-v2"
+             [class.selected]="selectedTestCard.number === card.number"
              (click)="selectTestCard(card)">
           <div class="card-badge-v2">{{ card.type }}</div>
           <div class="card-num-v2">{{ card.number }}</div>
         </div>
       </div>
-      <button class="btn-copy-v2" (click)="copyCardData()">📋 {{ 'COPY_CARD_DATA' | translate }}</button>
+      <button class="btn-copy-v2" (click)="copyCardData()">📋 {{ 'COPY_CARD_DATA' }}</button>
     </div>
 
     <div class="content-grid-v2">
       <div class="payment-methods-v2">
         <div class="section-v2">
-          <h2>💰 {{ 'PAYMENT_DETAILS' | translate }}</h2>
+          <h2>💰 {{ 'PAYMENT_DETAILS' }}</h2>
           <div class="methods-list-v2">
-            <div *ngFor="let method of paymentMethods" class="method-item-v2" 
+            <div *ngFor="let method of paymentMethods" class="method-item-v2"
                  [class.active]="selectedMethod === method.id" (click)="selectedMethod = method.id">
               <div class="method-icon-v2">{{ method.icon }}</div>
               <div class="method-text-v2">
-                <div class="method-label-v2">{{ method.name | translate }}</div>
-                <div class="method-sub-v2">{{ method.description | translate }}</div>
+                <div class="method-label-v2">{{ method.name }}</div>
+                <div class="method-sub-v2">{{ method.description }}</div>
               </div>
               <div class="method-check-v2" *ngIf="selectedMethod === method.id">✔</div>
             </div>
@@ -48,14 +48,14 @@
           <div *ngIf="selectedMethod === 'card'" class="card-form-v2">
             <form [formGroup]="paymentForm">
               <div class="form-group-v2">
-                <label>{{ 'CARD_NUMBER' | translate }}</label>
-                <input type="text" formControlName="cardNumber" (input)="formatCardNumber($event)" 
+                <label>{{ 'CARD_NUMBER' }}</label>
+                <input type="text" formControlName="cardNumber" (input)="formatCardNumber($event)"
                        placeholder="xxxx xxxx xxxx xxxx" maxlength="19" [class.invalid]="isControlInvalid('cardNumber')">
                 <div *ngIf="isControlInvalid('cardNumber')" class="error-v2">{{ getFormControlErrors('cardNumber')[0] }}</div>
               </div>
               <div class="form-row-v2">
                 <div class="form-group-v2">
-                  <label>{{ 'EXPIRY_DATE' | translate }}</label>
+                  <label>{{ 'EXPIRY_DATE' }}</label>
                   <input type="text" formControlName="expiryDate" (input)="formatExpiryDate($event)" placeholder="MM/YY" maxlength="5">
                 </div>
                 <div class="form-group-v2">
@@ -64,7 +64,7 @@
                 </div>
               </div>
               <div class="form-group-v2">
-                <label>{{ 'CARD_HOLDER_NAME' | translate }}</label>
+                <label>{{ 'CARD_HOLDER_NAME' }}</label>
                 <input type="text" formControlName="cardHolder" placeholder="e.g. Ahmed Ali">
               </div>
             </form>
@@ -72,39 +72,38 @@
 
           <div *ngIf="selectedMethod === 'paypal'" class="paypal-container-v2">
             <div class="paypal-msg-v2">
-              <p>🔄 {{ 'REDIRECT_PAYPAL' | translate }}</p>
+              <p>🔄 {{ 'REDIRECT_PAYPAL' }}</p>
             </div>
           </div>
         </div>
       </div>
       <div class="payment-sidebar-v2">
         <div class="summary-box-v2">
-          <h3>📊 {{ 'PAYMENT_BREAKDOWN' | translate }}</h3>
+          <h3>📊 {{ 'PAYMENT_BREAKDOWN' }}</h3>
           <div class="price-row-v2">
-            <span>{{ 'TOTAL' | translate }}</span>
+            <span>{{ 'TOTAL' }}</span>
             <span class="total-amount-v2">{{ paymentData.totalAmount }} {{ paymentData.currency }}</span>
           </div>
           <div class="actions-v2">
             <button class="btn-pay-v2" (click)="processPayment()" [disabled]="isProcessing || paymentComplete">
-              <span *ngIf="!isProcessing"> ✅ {{ 'PAY_NOW' | translate }}</span>
-              <span *ngIf="isProcessing">⏳ {{ 'PROCESSING' | translate }}</span>
+              <span *ngIf="!isProcessing"> ✅ {{ 'PAY_NOW' }}</span>
+              <span *ngIf="isProcessing">⏳ {{ 'PROCESSING' }}</span>
             </button>
-            <button class="btn-back-v2" routerLink="/dashboard">⬅ {{ 'BACK' | translate }}</button>
+            <button class="btn-back-v2" routerLink="/dashboard">⬅ {{ 'BACK' }}</button>
           </div>
         </div>
 
         <div *ngIf="paymentComplete" class="success-card-v2">
           <div class="success-icon-v2">🎉</div>
-          <h3>{{ 'PAYMENT_COMPLETE' | translate }}</h3>
+          <h3>{{ 'PAYMENT_COMPLETE' }}</h3>
           <div class="txn-info-v2">
             <p><strong>ID:</strong> {{ transactionId }}</p>
             <p><strong>Date:</strong> {{ getCurrentDate() }}</p>
           </div>
-          <button class="btn-continue-v2" routerLink="/">🚀 {{ 'VIEW_COURSE' | translate }}</button>
+          <button class="btn-continue-v2" routerLink="/">🚀 {{ 'VIEW_COURSE' }}</button>
         </div>
       </div>
     </div>
   </div>
-  <app-footer></app-footer>
-  <app-nav></app-nav>
+
 </div>

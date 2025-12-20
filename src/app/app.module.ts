@@ -39,9 +39,10 @@ import { CourseTableComponent } from './components/course-table/course-table.com
 import { NavComponent } from './components/nav/nav.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { EnrolledComponent } from './components/enrolled/enrolled.component';
-import { PaymentComponent } from './components/payment/payment.component';
-import { Payment2Component } from './components/payment2/payment2.component';
+// import { PaymentComponent } from './components/payment/payment.component';
+// import { Payment2Component } from './components/payment2/payment2.component';
 import { TranslatePipe } from './pipes/translate.pipe';
+import { CourseEnrollComponent } from './components/course-enroll/course-enroll.component';
 
 
 @NgModule({
@@ -76,9 +77,10 @@ import { TranslatePipe } from './pipes/translate.pipe';
     NavComponent,
     FooterComponent,
     EnrolledComponent,
-    PaymentComponent,
-    Payment2Component,
+    // PaymentComponent,
+    // Payment2Component,
     TranslatePipe,
+    CourseEnrollComponent,
   ],
   imports: [
     BrowserModule,

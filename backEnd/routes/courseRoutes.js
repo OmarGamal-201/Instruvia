@@ -18,7 +18,7 @@ const { cacheMiddleware, invalidateInstructorCache } = require('../middleware/ca
 // Public routes (with caching)
 router.get('/', cacheMiddleware('courses:list', 300), getCourses);
 router.get('/categories', cacheMiddleware('courses:categories', 3600), getCategories);
-router.get('/:id', cacheMiddleware('courses:detail', 300), getCourseById);
+router.get('/:id', getCourseById);
 
 // Protected routes
 router.post('/:id/review', protect, validate('addReview'), addReview);

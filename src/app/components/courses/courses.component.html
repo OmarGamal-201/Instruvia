@@ -101,7 +101,7 @@
 
             <div class="course-footer">
               <span class="price">{{ formatPrice(course.price) }}</span>
-              <button class="enroll-btn">{{ text.enroll }}</button>
+              <button class="enroll-btn" (click)="enrollInCourse(course)">{{ text.enroll }}</button>
             </div>
           </div>
         </div>

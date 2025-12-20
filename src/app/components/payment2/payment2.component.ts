@@ -9,7 +9,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslatePipe } from 'src/app/pipes/translate.pipe';
-import { environment } from 'src/environments/environment.development';
+// import { environment } from 'src/environments/environment.development';
 import { FooterComponent } from '../footer/footer.component';
 import { NavComponent } from '../nav/nav.component';
 @Component({
@@ -17,7 +17,7 @@ import { NavComponent } from '../nav/nav.component';
   templateUrl: './payment2.component.html',
   styleUrls: ['./payment2.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, HttpClientModule, TranslatePipe,FooterComponent,NavComponent] 
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, HttpClientModule]
 })
 export class Payment2Component implements OnInit, OnDestroy {
   paymentForm: FormGroup;
@@ -30,33 +30,33 @@ export class Payment2Component implements OnInit, OnDestroy {
     { id: 'card', name: 'CREDIT_CARD', icon: '💳', description: 'CREDIT_CARD_DESC' },
     { id: 'paypal', name: 'PAYPAL', icon: '💰', description: 'PAYPAL_DESC' }
   ];
-  
+
   selectedMethod = 'card';
   isProcessing = false;
   paymentComplete = false;
-  sandboxMode = true; 
+  sandboxMode = true;
   courseId: string | null = null;
-  
+
   // Dynamic data that updates after API call
   paymentData = { totalAmount: 0, instructorEarnings: 0, platformFee: 0, currency: 'USD' };
-  
+
   testCards = [
     { number: '4242 4242 4242 4242', type: 'Visa', expiry: '12/28', cvv: '123' },
     { number: '5555 5555 5555 4444', type: 'Mastercard', expiry: '03/27', cvv: '456' }
   ];
-  
+
   selectedTestCard = this.testCards[0];
   private destroy$ = new Subject<void>();
   private paypalMessageListener: ((event: MessageEvent) => void) | null = null;
 
   constructor(
-    private fb: FormBuilder, 
-    private router: Router, 
+    private fb: FormBuilder,
+    private router: Router,
     private route: ActivatedRoute,
-    private translationService: TranslationService, 
+    private translationService: TranslationService,
     private themeService: ThemeService,
-    private http: HttpClient, 
-    private cd: ChangeDetectorRef, 
+    private http: HttpClient,
+    private cd: ChangeDetectorRef,
     private zone: NgZone
   ) {
     this.paymentForm = this.fb.group({
@@ -71,10 +71,10 @@ export class Payment2Component implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.courseId = this.route.snapshot.paramMap.get('id');
-    
+
     // Fetch dynamic course data from Backend
     if (this.courseId) {
-      this.http.get(`${environment.apiUrl}/courses/${this.courseId}`)
+      this.http.get(`localhost:5000/api/courses/${this.courseId}`)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (data: any) => {
@@ -93,16 +93,11 @@ export class Payment2Component implements OnInit, OnDestroy {
         });
     }
 
-    this.themeService.darkMode$.pipe(takeUntil(this.destroy$)).subscribe(isDark => {
-      this.currentTheme = isDark ? 'dark' : 'light';
-      this.cd.detectChanges();
-    });
-
     if (this.sandboxMode) this.autoFillTestData();
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(); 
+    this.destroy$.next();
     this.destroy$.complete();
     if (this.paypalMessageListener) window.removeEventListener('message', this.paypalMessageListener);
   }
@@ -183,15 +178,15 @@ export class Payment2Component implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.selectedMethod === 'paypal') { 
-      this.processPayPalPayment(); 
-      return; 
+    if (this.selectedMethod === 'paypal') {
+      this.processPayPalPayment();
+      return;
     }
-    
+
     this.isProcessing = true;
-    this.http.post(`${environment.apiUrl}/payments/process`, { 
-      courseId: this.courseId, 
-      amount: this.paymentData.totalAmount 
+    this.http.post(`localhost:5000/api/payments/process`, {
+      courseId: this.courseId,
+      amount: this.paymentData.totalAmount
     })
     .pipe(takeUntil(this.destroy$))
     .subscribe({
@@ -257,7 +252,7 @@ export class Payment2Component implements OnInit, OnDestroy {
 
     paypalWindow.document.write(html);
     paypalWindow.document.close();
-    
+
     this.paypalMessageListener = (e: MessageEvent) => {
       if (e.data === 'payment_success') {
         this.zone.run(() => {

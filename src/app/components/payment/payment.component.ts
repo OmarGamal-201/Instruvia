@@ -1,20 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute } from '@angular/router'; 
-import { FormsModule } from '@angular/forms'; 
-import { HttpClient, HttpClientModule } from '@angular/common/http'; 
+import { RouterModule, ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslationService } from '../../services/translation.service';
 import { ThemeService } from '../../services/theme.service';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NavComponent } from '../nav/nav.component';
 import { FooterComponent } from '../footer/footer.component';
-import { environment } from 'src/environments/environment.development';
+// import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-payment',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, HttpClientModule, NavComponent, FooterComponent], 
+  imports: [CommonModule, RouterModule, FormsModule, HttpClientModule],
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
@@ -26,7 +26,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   isDarkMode = false;
   currentLang = 'en';
   discountCode: string = '';
-  
+
   private destroy$ = new Subject<void>();
   private subscriptions: Subscription[] = [];
   includedItems = [
@@ -45,30 +45,27 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.courseId = this.route.snapshot.paramMap.get('courseId');
-    
+
     if (this.courseId) {
       this.fetchCourseFromAPI(this.courseId);
+      console.log(this.course)
     }
-    this.subscriptions.push(
-      this.themeService.darkMode$.subscribe(isDark => this.isDarkMode = isDark),
-      this.translationService.currentLang$.subscribe(lang => this.currentLang = lang)
-    );
   }
   fetchCourseFromAPI(id: string) {
-    this.isLoading = true;
-    this.http.get(`${environment.apiUrl}/courses/${id}`)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (response: any) => {
-          this.course = response.data || response;
-          this.isLoading = false;
-        },
-        error: (error) => {
-          console.error('Error loading course details:', error);
-          this.isLoading = false;
-        }
-      });
-  }
+  this.isLoading = true;
+  this.http.get(`http://localhost:5000/api/courses/${id}`)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (response: any) => {
+        this.course = response.data || response;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading course details:', error);
+        this.isLoading = false;
+      }
+    });
+}
   get platformFee(): number {
     return this.course ? (this.course.price * 0.20) : 0;
   }
@@ -76,9 +73,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   get instructorEarnings(): number {
     return this.course ? (this.course.price - this.platformFee) : 0;
   }
-  translate(key: string): string {
-    return this.translationService.translate(key);
-  }
+
 
   formatNumber(num: number): string {
     if (!num) return '0';

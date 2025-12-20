@@ -387,10 +387,11 @@ export class CoursesComponent implements OnInit {
     return course.enrolledStudents?.length || 0;
   }
 
-  // Course actions
-  enrollInCourse(course: any) {
-    this.router.navigate(['/courses', course._id]);
-  }
+// Course actions
+enrollInCourse(course: any) {
+  // Pass only the course ID in the route
+  this.router.navigate(['/enroll', course._id || course.id]);
+}
 
   // Language & Theme
   changeLanguage(lang: string) {
