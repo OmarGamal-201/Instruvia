@@ -38,6 +38,10 @@ import { RecentDashboardComponent } from './components/recent-dashboard/recent-d
 import { CourseTableComponent } from './components/course-table/course-table.component';
 import { NavComponent } from './components/nav/nav.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { EnrolledComponent } from './components/enrolled/enrolled.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { Payment2Component } from './components/payment2/payment2.component';
+import { TranslatePipe } from './pipes/translate.pipe';
 
 
 @NgModule({
@@ -71,6 +75,10 @@ import { FooterComponent } from './components/footer/footer.component';
     CourseTableComponent,
     NavComponent,
     FooterComponent,
+    EnrolledComponent,
+    PaymentComponent,
+    Payment2Component,
+    TranslatePipe,
   ],
   imports: [
     BrowserModule,
