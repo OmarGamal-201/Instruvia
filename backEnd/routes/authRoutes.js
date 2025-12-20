@@ -15,6 +15,6 @@ router.post('/login', authLimiter, validate('login'), login);
 router.post('/forgot-password', passwordResetLimiter, validate('forgotPassword'), forgotPassword);
 router.post('/reset-password', passwordResetLimiter, validate('resetPassword'), resetPassword);
 router.get('/me', protect, me);
-router.post('/apply-instructor', protect, uploadInstructorDocuments, handleMulterError, processUploadedFiles, validate('applyInstructor'), applyInstructor);
+router.post('/apply-instructor', protect, uploadInstructorDocuments, processUploadedFiles, validate('applyInstructor'), applyInstructor);
 
 module.exports = router;

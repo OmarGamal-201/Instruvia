@@ -1,51 +1,17 @@
-<div class="dashboard-section">
-
-  <!-- Left: Monthly Earnings -->
-  <div class="earnings-card">
-    <div class="header">
-      <h2>Monthly Earnings</h2>
-
-      <div class="tabs">
-        <button [class.active]="selectedTab === 'monthly'" (click)="selectTab('monthly')">Monthly</button>
-        <button [class.active]="selectedTab === 'weekly'" (click)="selectTab('weekly')">Weekly</button>
-      </div>
-    </div>
-
-    <div class="chart-area">
-      <div class="icon">
-        📈
-      </div>
-      <p>Earnings chart visualization</p>
-    </div>
+<div class="earnings-container">
+  <div class="earnings-header">
+    <h2>Monthly Earnings</h2>
   </div>
 
-  <!-- Right: Recent Reviews -->
-  <div class="reviews-card">
-  <h2>Recent Reviews</h2>
-
-  <div class="review-row">
-    <div class="review-left">
-      <div class="name">Alex J.</div>
-      <p class="comment">Excellent teaching style!</p>
-    </div>
-
-    <div class="review-right">
-      <div class="stars">★★★★★</div>
-    </div>
+  <div *ngIf="isLoading" class="loading-spinner">
+    <p>Loading earnings data...</p>
   </div>
 
-  <div class="divider"></div>
-
-  <div class="review-row">
-    <div class="review-left">
-      <div class="name">Maria G.</div>
-      <p class="comment">Very helpful and clear.</p>
-    </div>
-
-    <div class="review-right">
-      <div class="stars">★★★★★</div>
-    </div>
-  </div>
+  <div *ngIf="!isLoading && monthlyData.length === 0" class="no-data">
+    <p>No earnings data available yet.</p>
   </div>
 
+  <div *ngIf="!isLoading && monthlyData.length > 0" class="chart-wrapper">
+    <canvas id="earningsChart"></canvas>
+  </div>
 </div>

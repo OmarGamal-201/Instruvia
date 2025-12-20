@@ -40,7 +40,7 @@ exports.getAllUsers = async (req, res) => {
 exports.getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select('-password');
-    
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -58,7 +58,7 @@ exports.getUserById = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const { name, email, role, bio, specialization, isInstructorApproved } = req.body;
-    
+
     const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -97,7 +97,7 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -124,19 +124,19 @@ exports.getDashboardStats = async (req, res) => {
     const totalUsers = await User.countDocuments();
     const totalStudents = await User.countDocuments({ role: 'student' });
     const totalInstructors = await User.countDocuments({ role: 'instructor' });
-    const pendingInstructors = await User.countDocuments({ 
-      role: 'student', 
-      isInstructorRequest: true 
+    const totalAdmins = await User.countDocuments({ role: 'admin' });
+    const pendingInstructors = await User.countDocuments({
+      role: 'student',
+      isInstructorRequest: true
     });
-    const approvedInstructors = await User.countDocuments({ 
-      role: 'instructor', 
-      isInstructorApproved: true 
+    const approvedInstructors = await User.countDocuments({
+      role: 'instructor',
+      isInstructorApproved: true
     });
 
     const recentUsers = await User.find()
       .select('name email role createdAt')
-      .sort({ createdAt: -1 })
-      .limit(5);
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
@@ -144,6 +144,7 @@ exports.getDashboardStats = async (req, res) => {
         totalUsers,
         totalStudents,
         totalInstructors,
+        totalAdmins,
         pendingInstructors,
         approvedInstructors
       },
@@ -159,18 +160,18 @@ exports.getPendingInstructors = async (req, res) => {
   try {
     const { page, limit, skip } = getPaginationParams(req.query);
 
-    const instructors = await User.find({ 
-      role: 'student', 
-      isInstructorRequest: true 
+    const instructors = await User.find({
+      role: 'student',
+      isInstructorRequest: true
     })
     .select('-password')
     .sort({ createdAt: -1 })
     .skip(skip)
     .limit(limit);
 
-    const total = await User.countDocuments({ 
-      role: 'student', 
-      isInstructorRequest: true 
+    const total = await User.countDocuments({
+      role: 'student',
+      isInstructorRequest: true
     });
 
     const pagination = {
@@ -223,7 +224,7 @@ exports.getInstructorApplicationById = async (req, res) => {
     const application = await InstructorApplication.findById(req.params.id)
       .populate('applicant', 'name email role createdAt')
       .populate('reviewedBy', 'name email');
-    
+
     if (!application) {
       return res.status(404).json({ message: 'Application not found' });
     }
@@ -280,8 +281,8 @@ console.log("Valid ObjectId:", mongoose.Types.ObjectId.isValid(req.params.id));
 
     await user.save();
 
-    
-    
+
+
     res.status(200).json({
       success: true,
       message: `Instructor application ${action} successfully`,

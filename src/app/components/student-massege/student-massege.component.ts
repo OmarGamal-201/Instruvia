@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService, ChatMessage } from '../../services/chat.service';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-student-massege',
   templateUrl: './student-massege.component.html',

@@ -30,7 +30,7 @@ import { Enroll3Component } from './components/enroll3/enroll3.component';
 import { Enroll4Component } from './components/enroll4/enroll4.component';
 import { AdmindashboardComponent } from './components/admindashboard/admindashboard.component';
 import { InstructordashboardComponent } from './components/instructordashboard/instructordashboard.component';
-import { MonthlyEarningComponent } from './components/monthly-earning/monthly-earning.component';
+import { MonthlyEarningsComponent } from './components/monthly-earning/monthly-earning.component';
 import { QuickActionsComponent } from './components/quick-actions/quick-actions.component';
 import { StatsCardComponent } from './components/stats-card/stats-card.component';
 import { StudentMassegeComponent } from './components/student-massege/student-massege.component';
@@ -61,7 +61,7 @@ import { CourseTableComponent } from './components/course-table/course-table.com
     Enroll4Component,
     AdmindashboardComponent,
     InstructordashboardComponent,
-    MonthlyEarningComponent,
+    MonthlyEarningsComponent,
     QuickActionsComponent,
     StatsCardComponent,
     StudentMassegeComponent,

@@ -78,19 +78,19 @@
       <div class="health-metrics">
         <div>
           <span><i class="fas fa-server"></i> Server Uptime:</span>
-          <strong>99.9%</strong>
+          <strong>{{healthMetrics.serverUptime}}%</strong>
         </div>
         <div>
           <span><i class="fas fa-users"></i> Active Sessions:</span>
-          <strong>2,845</strong>
+          <strong>{{healthMetrics.activeSessions}}</strong>
         </div>
         <div>
           <span><i class="fas fa-tachometer-alt"></i> Response Time:</span>
-          <strong>145ms</strong>
+          <strong>{{healthMetrics.responseTime}}</strong>
         </div>
         <div>
           <span><i class="fas fa-exclamation-triangle"></i> Error Rate:</span>
-          <strong>0.02%</strong>
+          <strong>{{healthMetrics.errorRate}}%</strong>
         </div>
       </div>
       <p class="status-indicator"><i class="fas fa-check-circle"></i> All systems operational</p>
@@ -108,21 +108,21 @@
         <i class="fas fa-user-graduate"></i>
         <div>
           <strong>Students</strong>
-          <span>45,280 (86%)</span>
+          <span>{{userDistribution.students}} ( {{ (userDistribution.students / userDistribution.totalUsers * 100) | number:'1.2-2' }}% )</span>
         </div>
       </div>
       <div class="distribution-item">
         <i class="fas fa-chalkboard-teacher"></i>
         <div>
           <strong>Instructors</strong>
-          <span>6,234 (12%)</span>
+          <span>{{userDistribution.instructors}} ( {{ (userDistribution.instructors / userDistribution.totalUsers * 100) | number:'1.2-2' }}% )</span>
         </div>
       </div>
       <div class="distribution-item">
         <i class="fas fa-user-shield"></i>
         <div>
           <strong>Admins</strong>
-          <span>1,331 (2%)</span>
+          <span>{{userDistribution.admins}} ( {{ (userDistribution.admins / userDistribution.totalUsers * 100) | number:'1.2-2' }}% )</span>
         </div>
       </div>
     </div>
@@ -130,7 +130,7 @@
 
   <!-- Pending Course Reviews -->
   <div class="dashboard-card pending-reviews">
-    <h3><i class="fas fa-clipboard-check"></i> Pending Course Reviews</h3>
+    <h3><i class="fas fa-clipboard-check"></i> Pending Instructors Reviews</h3>
     <div class="review-item" *ngFor="let review of pendingReviews">
       <div class="review-info">
         <div class="review-header">
@@ -149,7 +149,7 @@
 
   <!-- Recent Activity -->
   <div class="dashboard-card recent-activity">
-    <h3><i class="fas fa-history"></i> Recent Activity</h3>
+    <h3><i class="fas fa-history"></i> All Users</h3>
     <ul>
       <li *ngFor="let activity of recentActivity">
         <span class="activity-icon">

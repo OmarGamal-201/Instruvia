@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemeService } from '../shared/theme.service';
+import { AdmindashboardService, DashboardStats as BackendStats, InstructorApplication } from '../../services/admindashboard.service';
 import Chart from 'chart.js/auto';
 
 interface DashboardStats {
@@ -50,46 +51,43 @@ interface UserDistribution {
 export class AdmindashboardComponent implements OnInit {
   isDarkMode = false;
   isOpen = false;
+  isLoading = false;
 
   toggleMenu() {
     this.isOpen = !this.isOpen;
   }
+
   stats: DashboardStats[] = [
-    { title: 'Total Users', value: '52,845', change: '+12%', icon: 'assets/icons/users.png', link: 'users' },
-    { title: 'Total Courses', value: '5,234', change: '+8%', icon: 'assets/icons/courses.png', link: 'courses' },
-    { title: 'Consultations', value: '12,450', change: '+15%', icon: 'assets/icons/consultation.png', link: 'consultations' },
-    { title: 'Platform Revenue', value: '$842K', change: '+22%', icon: 'assets/icons/revenue.png', link: 'financials' },
+    { title: 'Total Users', value: '0', change: '+0%', icon: 'assets/icons/users.png', link: 'users' },
+    { title: 'Total Courses', value: '0', change: '+0%', icon: 'assets/icons/courses.png', link: 'courses' },
+    { title: 'Consultations', value: '0', change: '+0%', icon: 'assets/icons/consultation.png', link: 'consultations' },
+    { title: 'Platform Revenue', value: '$0', change: '+0%', icon: 'assets/icons/revenue.png', link: 'financials' },
   ];
 
-  pendingReviews: PendingReview[] = [
-    { course: 'Machine Learning Fundamentals', instructor: 'Dr. Alan Smith', time: '2 hours ago', id: '1', status: 'pending' },
-    { course: 'Blockchain Development', instructor: 'Sarah Lee', time: '5 hours ago', id: '2', status: 'pending' },
-    { course: 'iOS App Development', instructor: 'Mike Johnson', time: '1 day ago', id: '3', status: 'pending' },
-  ];
+  pendingReviews: PendingReview[] = [];
 
-  recentActivity: RecentActivity[] = [
-    { title: 'New user registration', details: 'john.doe@email.com', time: '5 minutes ago', icon: 'assets/icons/new-user.png', type: 'user' },
-    { title: 'Course published', details: 'Advanced React Patterns', time: '1 hour ago', icon: 'assets/icons/course.png', type: 'course' },
-    { title: 'Consultation completed', details: 'Sarah J. → Alex K.', time: '2 hours ago', icon: 'assets/icons/consultation.png', type: 'consultation' },
-    { title: 'Payout processed', details: 'Dr. Sarah Johnson', time: '2 hours ago', icon: 'assets/icons/payment.png', type: 'payment' },
-  ];
+  recentActivity: RecentActivity[] = [];
 
   healthMetrics: HealthMetrics = {
     serverUptime: '99.9%',
-    activeSessions: 2845,
-    responseTime: '145ms',
-    errorRate: '0.02%',
-    systemStatus: 'operational'
+    activeSessions: 0,
+    responseTime: '0ms',
+    errorRate: '0.00%',
+    systemStatus: 'loading'
   };
 
   userDistribution: UserDistribution = {
-    students: 45280,
-    instructors: 6234,
-    admins: 1331,
-    totalUsers: 52845
+    students: 0,
+    instructors: 0,
+    admins: 0,
+    totalUsers: 0
   };
 
-  constructor(private router: Router, private themeService: ThemeService) {
+  constructor(
+    private router: Router,
+    private themeService: ThemeService,
+    private adminService: AdmindashboardService
+  ) {
     this.themeService.isDarkMode$.subscribe(isDark => {
       this.isDarkMode = isDark;
     });
@@ -97,7 +95,6 @@ export class AdmindashboardComponent implements OnInit {
 
   ngOnInit() {
     this.loadDashboardData();
-    this.initUserChart();
   }
 
   goTo(page: string) {
@@ -105,34 +102,50 @@ export class AdmindashboardComponent implements OnInit {
   }
 
   approve(review: PendingReview) {
-    console.log('Approved:', review);
-    // Backend integration: Send approval request
-    if (review.id) {
-      this.updateReviewStatus(review.id, 'approved');
-    }
+    if (!review.id) return;
+
+    this.adminService.approveInstructorApplication(review.id, { approved: true })
+      .subscribe({
+        next: (response) => {
+          console.log('Approved:', response);
+          alert(response.message);
+          // Refresh the pending reviews
+          this.loadPendingInstructorApplications();
+        },
+        error: (error) => {
+          console.error('Error approving application:', error);
+          alert('Failed to approve application');
+        }
+      });
   }
 
   reject(review: PendingReview) {
-    console.log('Rejected:', review);
-    // Backend integration: Send rejection request
-    if (review.id) {
-      this.updateReviewStatus(review.id, 'rejected');
-    }
+    if (!review.id) return;
+
+    const rejectionReason = prompt('Please provide a reason for rejection:');
+    if (!rejectionReason) return;
+
+    this.adminService.approveInstructorApplication(review.id, { 
+      approved: false, 
+      rejectionReason 
+    })
+      .subscribe({
+        next: (response) => {
+          console.log('Rejected:', response);
+          alert(response.message);
+          // Refresh the pending reviews
+          this.loadPendingInstructorApplications();
+        },
+        error: (error) => {
+          console.error('Error rejecting application:', error);
+          alert('Failed to reject application');
+        }
+      });
   }
 
   details(review: PendingReview) {
-    console.log('Details:', review);
-    // Backend integration: Navigate to review details
     if (review.id) {
-      this.router.navigate([`/admin/reviews/${review.id}`]);
-    }
-  }
-
-  updateReviewStatus(reviewId: string | undefined, status: string) {
-    if (reviewId) {
-      // TODO: Implement API call to update review status
-      // Example: this.reviewService.updateReviewStatus(reviewId, status)
-      console.log(`Updating review ${reviewId} to ${status}`);
+      this.router.navigate([`/admin/instructor-applications/${review.id}`]);
     }
   }
 
@@ -174,7 +187,6 @@ export class AdmindashboardComponent implements OnInit {
     }
   }
 
-
   getActivityIcon(type: string): string {
     const iconMap: Record<string, string> = {
       'user': 'fas fa-user-plus',
@@ -186,22 +198,87 @@ export class AdmindashboardComponent implements OnInit {
   }
 
   loadDashboardData() {
-    // TODO: Implement API calls to load real data
-    // Example:
-    // this.userService.getStats().subscribe(stats => this.stats = stats);
-    // this.courseService.getPendingReviews().subscribe(reviews => this.pendingReviews = reviews);
-    // this.activityService.getRecentActivity().subscribe(activities => this.recentActivity = activities);
-    // this.healthService.getMetrics().subscribe(metrics => this.healthMetrics = metrics);
-    console.log('Loading dashboard data...');
+    this.isLoading = true;
+    
+    // Load dashboard stats
+    this.adminService.getDashboardStats().subscribe({
+      next: (response) => {
+        if (response.success) {
+          // Update user distribution
+          this.userDistribution = {
+            students: response.stats.totalStudents,
+            instructors: response.stats.totalInstructors,
+            admins: response.stats.totalAdmins,
+            totalUsers: response.stats.totalUsers
+          };
+
+          // Update stats cards
+          this.stats[0].value = response.stats.totalUsers.toLocaleString();
+          
+          // Convert recent users to activity feed
+          this.recentActivity = response.recentUsers.map(user => ({
+            title: 'New user registration',
+            details: user.email,
+            time: this.getRelativeTime(new Date(user.createdAt)),
+            icon: 'assets/icons/new-user.png',
+            type: 'user' as const
+          }));
+
+          // Initialize chart with real data
+          setTimeout(() => this.initUserChart(), 100);
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading dashboard stats:', error);
+        this.isLoading = false;
+      }
+    });
+
+    // Load pending instructor applications
+    this.loadPendingInstructorApplications();
+  }
+
+  loadPendingInstructorApplications() {
+    this.adminService.getInstructorApplications(1, 5, 'pending').subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.pendingReviews = response.data.map(app => ({
+            course: app.specialization || 'No specialization',
+            instructor: app.applicant.name,
+            time: this.getRelativeTime(new Date(app.submittedAt)),
+            id: app._id,
+            status: app.status
+          }));
+        }
+      },
+      error: (error) => {
+        console.error('Error loading pending applications:', error);
+      }
+    });
+  }
+
+  getRelativeTime(date: Date): string {
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 60) {
+      return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
+    } else if (diffHours < 24) {
+      return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+    } else {
+      return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+    }
   }
 
   loadTheme(): void {
     // Theme is now handled by ThemeService
-    // This method is kept for backward compatibility
   }
 
   toggleDarkMode(): void {
     this.themeService.toggleTheme();
   }
 }
-

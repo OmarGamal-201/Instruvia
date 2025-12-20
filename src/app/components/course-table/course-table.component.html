@@ -1,10 +1,16 @@
 <div class="course-performance-header">
   <h2>Course Performance</h2>
-
-
 </div>
 
-<table>
+<div *ngIf="isLoading" class="loading-spinner">
+  <p>Loading course data...</p>
+</div>
+
+<div *ngIf="!isLoading && courses.length === 0" class="no-data">
+  <p>No course performance data available yet.</p>
+</div>
+
+<table *ngIf="!isLoading && courses.length > 0">
   <thead>
     <tr>
       <th>Course</th>
@@ -16,10 +22,10 @@
 
   <tbody>
     <tr *ngFor="let c of courses">
-      <td>{{ c.name }}</td>
-      <td>{{ c.students }}</td>
-      <td>⭐ {{ c.rating }}</td>
-      <td>${{ c.revenue }}</td>
+      <td>{{ c.courseName }}</td>
+      <td>{{ c.totalStudents }}</td>
+      <td>⭐ {{ c.averageRating }}</td>
+      <td>{{ c.totalRevenue  }}</td>
     </tr>
   </tbody>
 </table>

@@ -29,11 +29,11 @@ export interface InstructorApplicationResponse {
   providedIn: 'root'
 })
 export class ProfileService {
-  private apiUrl = `http://localhost:5000/api`;
+  private apiUrl = `http://localhost:5000/api/auth`;
   constructor(private http: HttpClient) { }
   getUserData(): Observable<{ success: boolean; user: UserProfile }> {
     return this.http.get<{ success: boolean; user: UserProfile }>(
-      `${this.apiUrl}/auth/me`
+      `${this.apiUrl}/me`
     );
   }
   changePassword(
@@ -82,7 +82,7 @@ export class ProfileService {
     });
 
     return this.http.post<InstructorApplicationResponse>(
-      `${this.apiUrl}/instructor/apply`,
+      `${this.apiUrl}/apply-instructor`,
       formData,
       { headers }
     );

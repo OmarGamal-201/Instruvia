@@ -292,6 +292,7 @@ export class ProfileComponent implements OnInit {
         }, 500);
       },
       error: (error) => {
+        console.log(error)
         this.isSubmitting = false;
         this.applicationError =
           error.error?.message ||

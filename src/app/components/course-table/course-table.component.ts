@@ -1,29 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { InstructorService, CoursePerformance } from 'src/app/services/instructor.service';
 
 @Component({
   selector: 'app-course-table',
   templateUrl: './course-table.component.html',
   styleUrls: ['./course-table.component.css'],
 })
-export class CourseTableComponent {
-  courses = [
-    {
-      name: 'Complete Web Development Bootcamp',
-      students: 1245,
-      rating: 4.9,
-      revenue: 12450,
-    },
-    {
-      name: 'Advanced JavaScript & React',
-      students: 892,
-      rating: 4.8,
-      revenue: 8920,
-    },
-    {
-      name: 'Node.js Backend Mastery',
-      students: 708,
-      rating: 4.9,
-      revenue: 7080,
-    },
-  ];
+export class CourseTableComponent implements OnInit {
+  courses: CoursePerformance[] = [];
+  isLoading = false;
+
+  constructor(private instructorService: InstructorService) {}
+
+  ngOnInit() {
+    this.loadCoursePerformance();
+  }
+
+  loadCoursePerformance() {
+    this.isLoading = true;
+    
+    this.instructorService.getInstructorStats().subscribe({
+      next: (response) => {
+        if (response.success && response.dashboard.coursePerformance) {
+          this.courses = response.dashboard.coursePerformance;
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading course performance:', error);
+        this.isLoading = false;
+      }
+    });
+  }
 }

@@ -21,23 +21,23 @@ import { InstructordashboardComponent } from './components/instructordashboard/i
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'consultions', component: ConsultionsComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'courses', component: CoursesComponent },
+  { path: 'dashboard', component: DashboardComponent,canActivate: [AuthGuard],},
+  { path: 'consultions', component: ConsultionsComponent,canActivate: [AuthGuard], },
+  { path: 'profile', component: ProfileComponent,canActivate: [AuthGuard], },
+  { path: 'login', component: LoginComponent},
+  { path: 'courses', component: CoursesComponent,canActivate: [AuthGuard], },
   { path: 'about', component: AboutComponent },
-  { path: 'page1', component: Page1Component },
-  { path: 'page2', component: Page2Component },
-  { path: 'page3', component: Page3Component },
-  { path: 'page4', component: Page4Component },
-  { path: 'page5', component: Page5Component },
+  { path: 'page1', component: Page1Component,canActivate: [AuthGuard],},
+  { path: 'page2', component: Page2Component,canActivate: [AuthGuard], },
+  { path: 'page3', component: Page3Component ,canActivate: [AuthGuard],},
+  { path: 'page4', component: Page4Component,canActivate: [AuthGuard], },
+  { path: 'page5', component: Page5Component,canActivate: [AuthGuard], },
 
   // Protected routes - require authentication
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     data: { roles: ['user', 'admin', 'instructor'] }
   },
   {
@@ -54,7 +54,7 @@ const routes: Routes = [
   },
 
   // Redirect unknown routes
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
