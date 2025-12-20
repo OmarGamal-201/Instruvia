@@ -1,0 +1,152 @@
+<div class="admin-orders-container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <i class="fas fa-shopping-cart"></i>
+        Course Orders Management
+      </h1>
+      <p class="page-subtitle">Review and manage instructor course upload requests</p>
+    </div>
+    
+    <!-- Status Filter -->
+    <div class="filter-section">
+      <label for="statusFilter" class="filter-label">Filter by Status:</label>
+      <select 
+        id="statusFilter" 
+        class="status-filter" 
+        [(ngModel)]="statusFilter" 
+        (change)="onStatusFilterChange()">
+        <option *ngFor="let option of statusOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+      <span>Loading orders...</span>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage && !isLoading" class="error-container">
+    <div class="error-message">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>{{ errorMessage }}</span>
+    </div>
+    <button class="retry-btn" (click)="retryLoadOrders()">
+      <i class="fas fa-redo"></i>
+      Retry
+    </button>
+  </div>
+
+  <!-- Orders Table -->
+  <div *ngIf="!isLoading && !errorMessage" class="orders-table-container">
+    <div class="table-wrapper">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Instructor</th>
+            <th>Course Title</th>
+            <th>Category</th>
+            <th>Files</th>
+            <th>Submitted Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders" class="order-row" (click)="viewOrderDetails(order.id)">
+            <td class="order-id">
+              <span class="id-badge">{{ order.id }}</span>
+            </td>
+            <td class="instructor-info">
+              <div class="user-details">
+                <div class="user-name">{{ order.user.name }}</div>
+                <div class="user-email">{{ order.user.email }}</div>
+              </div>
+            </td>
+            <td class="course-title">
+              <div class="title-cell">
+                <span class="course-name">{{ order.courseTitle }}</span>
+                <span class="course-price">${{ order.price }}</span>
+              </div>
+            </td>
+            <td class="category">
+              <span class="category-badge">{{ order.category }}</span>
+            </td>
+            <td class="files">
+              <div class="files-info" *ngIf="hasUploadedFiles(order)">
+                <i class="fas fa-paperclip"></i>
+                <span>{{ getFileCount(order) }}</span>
+              </div>
+              <span *ngIf="!hasUploadedFiles(order)" class="no-files">No files</span>
+            </td>
+            <td class="date">
+              <span class="date-text">{{ formatDate(order.submittedAt) }}</span>
+            </td>
+            <td class="status">
+              <span class="status-badge" [class]="getStatusBadgeClass(order.status)">
+                {{ getStatusText(order.status) }}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="view-btn" (click)="viewOrderDetails(order.id); $event.stopPropagation()">
+                <i class="fas fa-eye"></i>
+                View Details
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="orders.length === 0 && !isLoading" class="empty-state">
+      <div class="empty-icon">
+        <i class="fas fa-inbox"></i>
+      </div>
+      <h3>No Orders Found</h3>
+      <p>There are no course orders to display.</p>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="!isLoading && !errorMessage && orders.length > 0" class="pagination-container">
+    <div class="pagination-info">
+      Showing {{ (currentPage - 1) * pageSize + 1 }} to 
+      {{ Math.min(currentPage * pageSize, totalOrders) }} of {{ totalOrders }} orders
+    </div>
+    
+    <div class="pagination-controls">
+      <button 
+        class="pagination-btn" 
+        [disabled]="currentPage === 1"
+        (click)="onPageChange(currentPage - 1)">
+        <i class="fas fa-chevron-left"></i>
+        Previous
+      </button>
+      
+      <button 
+        *ngFor="let page of paginationArray"
+        class="pagination-btn"
+        [class.active]="page === currentPage"
+        (click)="onPageChange(page)">
+        {{ page }}
+      </button>
+      
+      <button 
+        class="pagination-btn"
+        [disabled]="currentPage === totalPages"
+        (click)="onPageChange(currentPage + 1)">
+        Next
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>

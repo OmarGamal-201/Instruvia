@@ -38,11 +38,20 @@ import { RecentDashboardComponent } from './components/recent-dashboard/recent-d
 import { CourseTableComponent } from './components/course-table/course-table.component';
 import { NavComponent } from './components/nav/nav.component';
 import { FooterComponent } from './components/footer/footer.component';
+<<<<<<< HEAD
+import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
+import { AdminOrderDetailsComponent } from './components/admin-order-details/admin-order-details.component';
+import { OrderService } from './services/order.service';
+=======
 import { EnrolledComponent } from './components/enrolled/enrolled.component';
 // import { PaymentComponent } from './components/payment/payment.component';
 // import { Payment2Component } from './components/payment2/payment2.component';
 import { TranslatePipe } from './pipes/translate.pipe';
+<<<<<<< HEAD
 import { CourseEnrollComponent } from './components/course-enroll/course-enroll.component';
+=======
+>>>>>>> 67c2f6bb476b3b9f1a1a93c28d7e0ce8b981c3ae
+>>>>>>> 3c5296cc5831c923c6d1c46817b69f8372926bbc
 
 
 @NgModule({
@@ -76,11 +85,19 @@ import { CourseEnrollComponent } from './components/course-enroll/course-enroll.
     CourseTableComponent,
     NavComponent,
     FooterComponent,
+<<<<<<< HEAD
+    AdminOrdersComponent,
+    AdminOrderDetailsComponent,
+=======
     EnrolledComponent,
     // PaymentComponent,
     // Payment2Component,
     TranslatePipe,
+<<<<<<< HEAD
     CourseEnrollComponent,
+=======
+>>>>>>> 67c2f6bb476b3b9f1a1a93c28d7e0ce8b981c3ae
+>>>>>>> 3c5296cc5831c923c6d1c46817b69f8372926bbc
   ],
   imports: [
     BrowserModule,
@@ -93,6 +110,7 @@ import { CourseEnrollComponent } from './components/course-enroll/course-enroll.
   ],
   providers: [
     AuthService,
+    OrderService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

@@ -98,7 +98,11 @@ export class AdmindashboardComponent implements OnInit {
   }
 
   goTo(page: string) {
-    this.router.navigate([`/${page}`]);
+    if (page === 'orders') {
+      this.router.navigate(['/admin/orders']);
+    } else {
+      this.router.navigate([`/${page}`]);
+    }
   }
 
   approve(review: PendingReview) {

@@ -17,8 +17,22 @@
         <i class="fa-solid" [ngClass]="isDark ? 'fa-sun' : 'fa-moon'"></i>
     </div>
 
-    <a href="#" class="login">Login</a>
-    <button class="get-started">Get Started</button>
+    <!-- Show when user is NOT logged in -->
+    <ng-container *ngIf="!isLoggedIn">
+        <a href="#" class="login">Login</a>
+        <button class="get-started">Get Started</button>
+    </ng-container>
+
+    <!-- Show when user IS logged in -->
+    <ng-container *ngIf="isLoggedIn">
+        <div class="user-info">
+            <span class="user-name">{{ currentUser?.name || 'User' }}</span>
+            <button class="logout-btn" (click)="logout()">
+                <i class="fa-solid fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+    </ng-container>
 </div>
 
     <div class="menu-icon" (click)="toggleMenu()">
@@ -36,5 +50,20 @@
         <i class="fa-regular" [ngClass]="isDark ? 'fa-sun' : 'fa-moon'"></i>
         {{ isDark ? ' Light Mode' : ' Dark Mode' }}
     </div>
-    <button class="get-started">Get Started</button>
+    
+    <!-- Mobile menu auth items -->
+    <ng-container *ngIf="!isLoggedIn">
+        <a href="#" class="login">Login</a>
+        <button class="get-started">Get Started</button>
+    </ng-container>
+    
+    <ng-container *ngIf="isLoggedIn">
+        <div class="mobile-user-info">
+            <span class="user-name">{{ currentUser?.name || 'User' }}</span>
+            <button class="logout-btn mobile-logout" (click)="logout()">
+                <i class="fa-solid fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+    </ng-container>
 </nav>
