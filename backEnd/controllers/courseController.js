@@ -33,17 +33,16 @@ exports.createCourse = async (req, res) => {
       description,
       instructor: req.user.id,
       category,
-      level,
+      // level,
       price,
       thumbnail,
       previewVideo,
       language,
       duration,
-      lessons,
       requirements,
       whatYouWillLearn,
       tags,
-      status: 'draft'
+      status: 'published'
     });
 
     // Populate instructor details

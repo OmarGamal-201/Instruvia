@@ -36,6 +36,8 @@ import { StatsCardComponent } from './components/stats-card/stats-card.component
 import { StudentMassegeComponent } from './components/student-massege/student-massege.component';
 import { RecentDashboardComponent } from './components/recent-dashboard/recent-dashboard.component';
 import { CourseTableComponent } from './components/course-table/course-table.component';
+import { NavComponent } from './components/nav/nav.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -67,6 +69,8 @@ import { CourseTableComponent } from './components/course-table/course-table.com
     StudentMassegeComponent,
     RecentDashboardComponent,
     CourseTableComponent,
+    NavComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

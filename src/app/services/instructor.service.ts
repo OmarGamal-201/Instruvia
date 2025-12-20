@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-// import { environment } from '../../environments/environment';
 
 // Interfaces
 export interface InstructorStats {
@@ -102,13 +101,14 @@ export interface MonthlyEarning {
   providedIn: 'root'
 })
 export class InstructorService {
-  private apiUrl = `http://localhost:5000/api/courses/`;
+  // FIXED: Removed trailing slash and corrected base URL
+  private apiUrl = 'http://localhost:5000/api/courses';
 
   constructor(private http: HttpClient) {}
 
   // Get instructor dashboard statistics
   getInstructorStats(): Observable<DashboardResponse> {
-    return this.http.get<DashboardResponse>(`${this.apiUrl}/dashboard`);
+    return this.http.get<DashboardResponse>(`${this.apiUrl}/instructor/dashboard`);
   }
 
   // Get instructor's courses with pagination and filters
@@ -131,14 +131,14 @@ export class InstructorService {
   // Get single course details
   getCourseById(courseId: string): Observable<{ success: boolean; course: Course }> {
     return this.http.get<{ success: boolean; course: Course }>(
-      `${this.apiUrl}/courses/${courseId}`
+      `${this.apiUrl}/${courseId}`
     );
   }
 
-  // Create new course
+  // Create new course - FIXED: Correct endpoint
   createCourse(courseData: Partial<Course>): Observable<{ success: boolean; message: string; course: Course }> {
     return this.http.post<{ success: boolean; message: string; course: Course }>(
-      `${this.apiUrl}/courses`,
+      this.apiUrl, // POST to /api/courses
       courseData
     );
   }
@@ -149,7 +149,7 @@ export class InstructorService {
     courseData: Partial<Course>
   ): Observable<{ success: boolean; message: string; course: Course }> {
     return this.http.put<{ success: boolean; message: string; course: Course }>(
-      `${this.apiUrl}/courses/${courseId}`,
+      `${this.apiUrl}/${courseId}`,
       courseData
     );
   }
@@ -157,7 +157,7 @@ export class InstructorService {
   // Delete course
   deleteCourse(courseId: string): Observable<{ success: boolean; message: string }> {
     return this.http.delete<{ success: boolean; message: string }>(
-      `${this.apiUrl}/courses/${courseId}`
+      `${this.apiUrl}/${courseId}`
     );
   }
 
@@ -167,7 +167,7 @@ export class InstructorService {
     lessonData: Partial<Lesson>
   ): Observable<{ success: boolean; message: string; lesson: Lesson }> {
     return this.http.post<{ success: boolean; message: string; lesson: Lesson }>(
-      `${this.apiUrl}/courses/${courseId}/lessons`,
+      `${this.apiUrl}/${courseId}/lessons`,
       lessonData
     );
   }
@@ -179,7 +179,7 @@ export class InstructorService {
     lessonData: Partial<Lesson>
   ): Observable<{ success: boolean; message: string; lesson: Lesson }> {
     return this.http.put<{ success: boolean; message: string; lesson: Lesson }>(
-      `${this.apiUrl}/courses/${courseId}/lessons/${lessonId}`,
+      `${this.apiUrl}/${courseId}/lessons/${lessonId}`,
       lessonData
     );
   }
@@ -190,7 +190,7 @@ export class InstructorService {
     lessonId: string
   ): Observable<{ success: boolean; message: string }> {
     return this.http.delete<{ success: boolean; message: string }>(
-      `${this.apiUrl}/courses/${courseId}/lessons/${lessonId}`
+      `${this.apiUrl}/${courseId}/lessons/${lessonId}`
     );
   }
 
@@ -200,21 +200,21 @@ export class InstructorService {
     lessonOrders: { lessonId: string; order: number }[]
   ): Observable<{ success: boolean; message: string }> {
     return this.http.put<{ success: boolean; message: string }>(
-      `${this.apiUrl}/courses/${courseId}/lessons/reorder`,
+      `${this.apiUrl}/${courseId}/lessons/reorder`,
       { lessonOrders }
     );
   }
 
   // Get course performance analytics
   getCoursePerformance(courseId: string): Observable<CoursePerformance> {
-    return this.http.get<CoursePerformance>(`${this.apiUrl}/courses/${courseId}/performance`);
+    return this.http.get<CoursePerformance>(`${this.apiUrl}/${courseId}/performance`);
   }
 
   // Get recent enrollments for instructor
   getRecentEnrollments(limit: number = 10): Observable<{ success: boolean; enrollments: RecentEnrollment[] }> {
     const params = new HttpParams().set('limit', limit.toString());
     return this.http.get<{ success: boolean; enrollments: RecentEnrollment[] }>(
-      `${this.apiUrl}/recent-enrollments`,
+      `${this.apiUrl}/instructor/recent-enrollments`,
       { params }
     );
   }
@@ -223,7 +223,7 @@ export class InstructorService {
   getMonthlyEarnings(months: number = 12): Observable<{ success: boolean; earnings: MonthlyEarning[] }> {
     const params = new HttpParams().set('months', months.toString());
     return this.http.get<{ success: boolean; earnings: MonthlyEarning[] }>(
-      `${this.apiUrl}/monthly-earnings`,
+      `${this.apiUrl}/instructor/monthly-earnings`,
       { params }
     );
   }

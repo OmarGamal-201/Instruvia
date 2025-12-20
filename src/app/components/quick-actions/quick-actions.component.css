@@ -12,20 +12,19 @@
   margin-bottom: 18px;
   color: #222;
   margin-top: -8px;
-  font-weight: 600;
+
 }
 
 .action {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 5px 10px;
   border: 1px solid #e4e6eb;
   border-radius: 12px;
   margin-bottom: 14px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  background: #ffffff;
+  transition: 0.2s ease;
 }
 
 .action:last-child {
@@ -34,45 +33,124 @@
 
 .action:hover {
   background: #8459cb;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(132, 89, 203, 0.2);
-}
-
-.action:hover .label,
-.action:hover .icon {
-  color: #fff;
 }
 
 .icon {
   font-size: 20px;
-  transition: color 0.2s ease;
 }
 
 .label {
   font-size: 15px;
   font-weight: 600;
   color: #333;
-  transition: color 0.2s ease;
 }
 
-/* Active state - Purple gradient */
-.action.active {
+/* الزر البنفسجي */
+ .active {
   background: linear-gradient(90deg, #6a11ff, #893bff);
   color: #fff;
   border: none;
   box-shadow: 0 4px 12px rgba(138, 63, 255, 0.25);
 }
 
-.action.active .label {
+.active .label {
   color: #fff;
 }
 
-.action.active .icon {
+.active .icon {
   color: #fff;
 }
 
-.action.active:hover {
-  background: linear-gradient(90deg, #5a01ef, #7929ff);
+/* خلفية التعتيم */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* صندوق المحتوى */
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 400px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-cancel {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: #eee;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-save {
+  flex: 2;
+  padding: 10px;
+  border: none;
+  background: #6a11ff;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ... نفس الكود السابق ... */
+
+.form-row {
+  display: flex;
+  gap: 10px;
+}
+
+h3 {
+  margin-bottom: 20px;
+  color: #6a11ff;
+  font-size: 22px;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
 }
 
 /* ===========================
@@ -81,7 +159,6 @@
 @media (max-width: 992px) {
   .quick-actions-container {
     width: 100%;
-    max-width: 500px;
   }
 }
 
@@ -128,9 +205,5 @@
 
   .label {
     font-size: 13px;
-  }
-
-  .icon {
-    font-size: 16px;
   }
 }

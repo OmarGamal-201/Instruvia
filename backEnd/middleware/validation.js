@@ -164,12 +164,6 @@ const schemas = {
       .messages({
         "string.empty": "Category is required",
       }),
-    level: Joi.string()
-      .valid("Beginner", "Intermediate", "Advanced")
-      .required()
-      .messages({
-        "string.empty": "Level is required",
-      }),
     price: Joi.number().min(0).required().messages({
       "number.base": "Price must be a number",
       "number.min": "Price cannot be negative",
@@ -210,7 +204,6 @@ const schemas = {
         })
       )
       .min(1)
-      .required()
       .messages({
         "array.min": "Course must have at least one lesson",
       }),

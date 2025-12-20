@@ -1,0 +1,290 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding-top: 80px;
+}
+
+/* ================= NAV ================= */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+
+  padding: 0 3rem;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+
+  align-items: center;
+  background: white;
+  border-bottom: 1px solid #eee;
+  z-index: 999;
+}
+
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  height: 32px;
+}
+
+.logo span {
+  font-size: 25px;
+  font-weight: 700;
+  color: #7b2efb;
+}
+
+/* CENTER LINKS */
+.center-links {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.center-links a {
+  text-decoration: none;
+  color: #1f2937;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+/* RIGHT SECTION */
+.right-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
+}
+
+.right-section i {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  /* دائرة */
+  background: #f3f4f6;
+  /* خلفية خفيفة في الـ Light Mode */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #1f2937;
+  /* لون الأيقونة في الـ Light Mode */
+}
+
+/* شكل الأيقونة لما نعدي عليها بالماوس */
+.theme-toggle:hover {
+  transform: rotate(15deg) scale(1.1);
+  background: #e5e7eb;
+}
+
+/* تنسيق الأيقونة لما الدارك مود يشتغل */
+/* بما إننا استخدمنا Invert، الألوان هتنعكس تلقائياً بس هنظبط الوضوح هنا */
+.theme-toggle i {
+  font-size: 20px;
+}
+
+/* لو الشمس ظاهرة (Dark Mode مفعل) خلي ليها توهج أصفر */
+.fa-sun {
+  color: #ffb100;
+  /* لون برتقالي شمس شيك */
+  text-shadow: 0 0 10px rgba(255, 177, 0, 0.5);
+}
+
+/* لو القمر ظاهر (Light Mode) خليه يميل للأزرق الغامق */
+.fa-moon {
+  color: #4b5563;
+}
+
+.login {
+  color: #1f2937;
+  font-size: 17px;
+  text-decoration: none;
+}
+
+/* BUTTON */
+.get-started {
+  background: linear-gradient(90deg, #7b2efb, #5c6fff);
+  border: none;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+/* ضيف دول بس في أخر ملف الـ css بتاع الـ nav */
+
+.cursor-pointer {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  font-size: 22px;
+  color: #1f2937;
+  /* لون القمر الافتراضي */
+}
+
+.cursor-pointer:hover {
+  transform: scale(1.2);
+  color: #7b2efb;
+}
+
+/* عشان الصور متتأثرش بالقلب وتفضل ألوانها واضحة */
+img {
+  transition: filter 0.3s ease;
+}
+
+/* ================= HAMBURGER ================= */
+.menu-icon {
+  display: none;
+  cursor: pointer;
+  font-size: 26px;
+  position: absolute;
+  right: 100px;
+  top: 25px;
+}
+
+.menu-icon i {
+  position: absolute;
+  opacity: 0;
+  transition: .3s;
+}
+
+.menu-icon i.active {
+  opacity: 1;
+}
+
+/* ================= MOBILE MENU ================= */
+.mobile-menu {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  background: white;
+  padding: 1.5rem 2rem;
+
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s ease;
+  border-bottom: 1px solid #eee;
+}
+
+.mobile-menu.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobile-menu a {
+  margin: 1rem 0;
+  font-size: 18px;
+  color: #1f2937;
+  text-decoration: none;
+}
+
+.mobile-menu button {
+  margin-top: 1.5rem;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+
+  .center-links,
+  .right-section {
+    display: none;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+}
+
+
+/* ========== HOVER ANIMATIONS ========== */
+
+/* Logo Hover (Scale + Purple Glow) */
+.logo:hover span {
+  color: #5c35ff;
+  transition: .3s ease;
+}
+
+.logo:hover img {
+  transform: scale(1.15);
+  transition: .3s ease;
+  filter: drop-shadow(0 0 4px #bda5ff);
+}
+
+/* Links Hover (Underline + Color Change + Fade) */
+.center-links a {
+  position: relative;
+  transition: .3s ease;
+}
+
+.center-links a:hover {
+  color: #7b2efb;
+}
+
+/* underline animation */
+.center-links a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -4px;
+  left: 50%;
+  background: #7b2efb;
+  transition: 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.center-links a:hover::after {
+  width: 70%;
+}
+
+/* Right Section Hover */
+.right-section i:hover {
+  color: #7b2efb;
+  transform: scale(1.2);
+  transition: .3s;
+}
+
+.login:hover {
+  color: #7b2efb;
+  transition: .3s;
+}
+
+/* Button Hover (Glow + slight scale) */
+.get-started {
+  transition: 0.3s ease;
+}
+
+.get-started:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 12px rgba(123, 46, 251, 0.4);
+  opacity: 1;
+}
+
+/* Navbar slight shadow when hovering */
+.header:hover {
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  transition: .3s ease-in-out;
+}

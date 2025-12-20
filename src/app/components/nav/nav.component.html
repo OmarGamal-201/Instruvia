@@ -1,0 +1,40 @@
+<header class="header">
+
+    <div class="logo">
+        <img src="../../../assets/logo.png" alt="Logo">
+        <span>Instruvia</span>
+    </div>
+
+    <ul class="center-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">Consultations</a></li>
+        <li><a href="#">About</a></li>
+    </ul>
+
+   <div class="right-section">
+    <div class="theme-toggle" (click)="toggleDarkMode()">
+        <i class="fa-solid" [ngClass]="isDark ? 'fa-sun' : 'fa-moon'"></i>
+    </div>
+
+    <a href="#" class="login">Login</a>
+    <button class="get-started">Get Started</button>
+</div>
+
+    <div class="menu-icon" (click)="toggleMenu()">
+        <i class="fa-solid fa-bars" [class.active]="!isOpen"></i>
+        <i class="fa-solid fa-xmark" [class.active]="isOpen"></i>
+    </div>
+
+</header>
+
+<nav class="mobile-menu" [class.active]="isOpen">
+    <a href="#">Home</a>
+    <a href="#">Courses</a>
+    <a href="#">About</a>
+    <div (click)="toggleDarkMode()" style="cursor:pointer; padding: 10px;">
+        <i class="fa-regular" [ngClass]="isDark ? 'fa-sun' : 'fa-moon'"></i>
+        {{ isDark ? ' Light Mode' : ' Dark Mode' }}
+    </div>
+    <button class="get-started">Get Started</button>
+</nav>

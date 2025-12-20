@@ -30,7 +30,8 @@ const courseSchema = new mongoose.Schema({
   level: {
     type: String,
     required: [true, 'Level is required'],
-    enum: ['Beginner', 'Intermediate', 'Advanced']
+    enum: ['Beginner', 'Intermediate', 'Advanced'],
+    default: 'Beginner'
   },
   price: {
     type: Number,
@@ -57,7 +58,6 @@ const courseSchema = new mongoose.Schema({
   lessons: [{
     title: {
       type: String,
-      required: true,
       trim: true,
       maxlength: [100, 'Lesson title cannot exceed 100 characters']
     },
