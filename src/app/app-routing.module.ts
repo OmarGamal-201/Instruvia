@@ -16,6 +16,8 @@ import { Page4Component } from './components/page4/page4.component';
 import { Page5Component } from './components/page5/page5.component';
 import { AdmindashboardComponent } from './components/admindashboard/admindashboard.component';
 import { InstructordashboardComponent } from './components/instructordashboard/instructordashboard.component';
+import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
+import { AdminOrderDetailsComponent } from './components/admin-order-details/admin-order-details.component';
 
 
 const routes: Routes = [
@@ -51,6 +53,20 @@ const routes: Routes = [
     component: InstructordashboardComponent,
     canActivate: [AuthGuard],
     data: { roles: ['instructor'] }
+  },
+
+  // Admin Orders Management Routes
+  {
+    path: 'admin/orders',
+    component: AdminOrdersComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
+  },
+  {
+    path: 'admin/orders/:orderId',
+    component: AdminOrderDetailsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
 
   // Redirect unknown routes

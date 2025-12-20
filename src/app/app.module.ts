@@ -38,6 +38,9 @@ import { RecentDashboardComponent } from './components/recent-dashboard/recent-d
 import { CourseTableComponent } from './components/course-table/course-table.component';
 import { NavComponent } from './components/nav/nav.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
+import { AdminOrderDetailsComponent } from './components/admin-order-details/admin-order-details.component';
+import { OrderService } from './services/order.service';
 
 
 @NgModule({
@@ -71,6 +74,8 @@ import { FooterComponent } from './components/footer/footer.component';
     CourseTableComponent,
     NavComponent,
     FooterComponent,
+    AdminOrdersComponent,
+    AdminOrderDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,6 +88,7 @@ import { FooterComponent } from './components/footer/footer.component';
   ],
   providers: [
     AuthService,
+    OrderService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
