@@ -19,3 +19,4 @@ describe('Payment2Component', () => {
     expect(component).toBeTruthy();
   });
 });
+
